@@ -7,793 +7,42 @@
 
   <style>
     :root{
-      --bg:#f5f7f5;
-      --dark:#0b0f0d;
-      --dark2:#111827;
-      --green:#0f6b45;
-      --green2:#14532d;
-      --green3:#1f7a52;
-      --soft:#eff6f1;
-      --white:#ffffff;
-      --muted:#6b7280;
-      --border:#dfe6e1;
-      --danger:#b91c1c;
-      --warning:#b45309;
-      --success:#166534;
-      --shadow:0 14px 35px rgba(0,0,0,.08);
-      --radius:22px;
+      --bg:#f5f7f5; --dark:#0b0f0d; --dark2:#111827; --green:#0f6b45; --green2:#14532d;
+      --white:#ffffff; --muted:#6b7280; --border:#dfe6e1; --danger:#b91c1c; --warning:#b45309;
+      --success:#166534; --shadow:0 14px 35px rgba(0,0,0,.08); --radius:22px;
     }
-
     *{box-sizing:border-box}
-
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family:Arial, Helvetica, sans-serif;
-      color:var(--dark2);
-      background:
-        radial-gradient(circle at top left, rgba(15,107,69,.10), transparent 32%),
-        radial-gradient(circle at bottom right, rgba(17,24,39,.08), transparent 28%),
-        var(--bg);
-    }
-
-    body::before{
-      content:"🐄";
-      position:fixed;
-      right:10px;
-      bottom:10px;
-      font-size:150px;
-      opacity:.045;
-      pointer-events:none;
-      z-index:0;
-      filter:grayscale(100%);
-    }
-
-    input,select,textarea,button{
-      font-family:inherit;
-      font-size:14px;
-    }
-
-    button{-webkit-tap-highlight-color:transparent}
-    .hidden{display:none !important}
-
-    .loading{
-      position:fixed;
-      inset:0;
-      z-index:999;
-      background:rgba(0,0,0,.35);
-      backdrop-filter:blur(4px);
-      display:grid;
-      place-items:center;
-      padding:16px;
-    }
-
-    .loading-box{
-      width:min(300px,100%);
-      background:#fff;
-      border-radius:22px;
-      padding:20px;
-      box-shadow:0 25px 65px rgba(0,0,0,.2);
-      text-align:center;
-    }
-
-    .spinner{
-      width:32px;
-      height:32px;
-      margin:0 auto 10px;
-      border-radius:50%;
-      border:4px solid #d1fae5;
-      border-top-color:var(--green);
-      animation:spin .8s linear infinite;
-    }
-
-    @keyframes spin{
-      to{transform:rotate(360deg)}
-    }
-
-    .login-wrap{
-      min-height:100vh;
-      display:grid;
-      place-items:center;
-      padding:14px;
-      position:relative;
-      z-index:1;
-    }
-
-    .login-card{
-      width:min(1020px,100%);
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      background:rgba(255,255,255,.95);
-      border-radius:32px;
-      overflow:hidden;
-      box-shadow:var(--shadow);
-      border:1px solid rgba(255,255,255,.9);
-    }
-
-    .hero{
-      position:relative;
-      overflow:hidden;
-      background:linear-gradient(135deg, #0b0f0d, #0f6b45 55%, #14532d);
-      color:#fff;
-      padding:34px;
-    }
-
-    .hero::after{
-      content:"🐄";
-      position:absolute;
-      right:10px;
-      bottom:-10px;
-      font-size:180px;
-      opacity:.08;
-      filter:grayscale(100%);
-    }
-
-    .hero-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.18);
-      font-weight:800;
-      font-size:13px;
-    }
-
-    .hero h1{
-      margin:20px 0 10px;
-      font-size:48px;
-      line-height:.95;
-      letter-spacing:-1.5px;
-    }
-
-    .hero p{
-      margin:0;
-      line-height:1.7;
-      color:rgba(255,255,255,.88);
-      max-width:440px;
-      font-size:15px;
-    }
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-      margin-top:24px;
-    }
-
-    .hero-box{
-      padding:16px;
-      border-radius:18px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.16);
-    }
-
-    .hero-box b{
-      display:block;
-      font-size:22px;
-      margin-bottom:4px;
-    }
-
-    .hero-box span{
-      font-size:12px;
-      color:rgba(255,255,255,.82);
-    }
-
-    .login-panel{
-      padding:34px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-    }
-
-    .login-panel h2{
-      margin:0 0 8px;
-      font-size:28px;
-      color:var(--dark);
-    }
-
-    .desc{
-      margin:0 0 18px;
-      color:var(--muted);
-      line-height:1.6;
-      font-size:14px;
-    }
-
-    .tabs{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:6px;
-      padding:6px;
-      background:#e9efeb;
-      border-radius:18px;
-      margin-bottom:16px;
-    }
-
-    .tab{
-      border:0;
-      background:transparent;
-      padding:12px;
-      border-radius:14px;
-      font-weight:900;
-      color:#64748b;
-      cursor:pointer;
-    }
-
-    .tab.active{
-      background:#fff;
-      color:var(--green);
-      box-shadow:0 8px 18px rgba(0,0,0,.06);
-    }
-
-    .field{
-      margin-bottom:12px;
-    }
-
-    .field label{
-      display:block;
-      font-size:12px;
-      font-weight:800;
-      color:#4b5563;
-      margin-bottom:6px;
-      letter-spacing:.02em;
-    }
-
-    .field input,
-    .field select,
-    .field textarea{
-      width:100%;
-      border:1px solid var(--border);
-      background:#fff;
-      border-radius:16px;
-      padding:13px 14px;
-      outline:none;
-      color:var(--dark2);
-    }
-
-    .field input:focus,
-    .field select:focus,
-    .field textarea:focus{
-      border-color:var(--green);
-      box-shadow:0 0 0 4px rgba(15,107,69,.08);
-    }
-
-    .btn{
-      border:0;
-      border-radius:16px;
-      padding:12px 14px;
-      cursor:pointer;
-      font-weight:900;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      text-decoration:none;
-      font-size:13px;
-    }
-
-    .btn-primary{
-      background:linear-gradient(135deg, var(--dark), var(--green));
-      color:#fff;
-      box-shadow:0 10px 24px rgba(15,107,69,.22);
-    }
-
-    .btn-light{
-      background:#eef3ef;
-      color:var(--dark2);
-    }
-
-    .btn-danger{
-      background:#fee2e2;
-      color:#991b1b;
-    }
-
-    .btn-success{
-      background:#dcfce7;
-      color:#166534;
-    }
-
-    .btn-warning{
-      background:#fef3c7;
-      color:#92400e;
-    }
-
-    .btn-sm{
-      padding:8px 10px;
-      font-size:12px;
-      border-radius:12px;
-    }
-
-    .full{width:100%}
-
-    .alert{
-      padding:12px 14px;
-      border-radius:14px;
-      font-size:13px;
-      line-height:1.45;
-      margin-bottom:12px;
-    }
-
-    .alert-error{
-      background:#fee2e2;
-      color:#7f1d1d;
-      border:1px solid #fecaca;
-    }
-
-    .alert-success{
-      background:#dcfce7;
-      color:#14532d;
-      border:1px solid #bbf7d0;
-    }
-
-    .page{
-      width:min(1180px, calc(100% - 20px));
-      margin:0 auto;
-      padding:12px 0 34px;
-      position:relative;
-      z-index:1;
-    }
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:10;
-      background:rgba(245,247,245,.92);
-      backdrop-filter:blur(10px);
-      padding:10px 0 12px;
-      margin-bottom:12px;
-    }
-
-    .topbar-inner{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-
-    .logo{
-      width:46px;
-      height:46px;
-      border-radius:16px;
-      background:linear-gradient(135deg, var(--dark), var(--green));
-      color:#fff;
-      display:grid;
-      place-items:center;
-      font-size:22px;
-      font-weight:900;
-      box-shadow:0 10px 22px rgba(15,107,69,.22);
-      flex:0 0 auto;
-    }
-
-    .brand h1{
-      margin:0;
-      font-size:22px;
-      letter-spacing:-.4px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .brand p{
-      margin:4px 0 0;
-      color:var(--muted);
-      font-size:12px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .actions{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    .summary{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:12px;
-      margin-bottom:14px;
-    }
-
-    .card{
-      background:rgba(255,255,255,.96);
-      border:1px solid rgba(255,255,255,.9);
-      border-radius:var(--radius);
-      padding:16px;
-      box-shadow:var(--shadow);
-    }
-
-    .stat .label{
-      color:#6b7280;
-      font-size:12px;
-      font-weight:900;
-      margin-bottom:6px;
-      text-transform:uppercase;
-      letter-spacing:.03em;
-    }
-
-    .stat .value{
-      font-size:24px;
-      font-weight:900;
-      color:var(--dark);
-      letter-spacing:-.8px;
-    }
-
-    .stat .small{
-      margin-top:5px;
-      color:#6b7280;
-      font-size:12px;
-      line-height:1.45;
-    }
-
-    .formula{
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:12px;
-      margin-bottom:14px;
-    }
-
-    .formula-box{
-      background:#f8fbf9;
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:14px;
-    }
-
-    .formula-box span{
-      display:block;
-      color:#6b7280;
-      font-size:11px;
-      font-weight:800;
-      text-transform:uppercase;
-      margin-bottom:6px;
-    }
-
-    .formula-box b{
-      font-size:16px;
-      color:var(--dark);
-    }
-
-    .admin-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:14px;
-      margin-bottom:14px;
-    }
-
-    .section-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      margin-bottom:12px;
-    }
-
-    .section-head h2{
-      margin:0;
-      font-size:18px;
-      color:var(--dark);
-    }
-
-    .table-card{
-      margin-bottom:14px;
-    }
-
-    .table-wrap{
-      overflow-x:auto;
-      background:#fff;
-      border:1px solid var(--border);
-      border-radius:18px;
-    }
-
-    table{
-      width:100%;
-      min-width:820px;
-      border-collapse:collapse;
-    }
-
-    th, td{
-      padding:12px 13px;
-      border-bottom:1px solid var(--border);
-      text-align:left;
-      vertical-align:middle;
-      font-size:13px;
-    }
-
-    th{
-      background:#f7faf8;
-      color:#6b7280;
-      text-transform:uppercase;
-      font-size:11px;
-      letter-spacing:.04em;
-    }
-
-    tr:last-child td{border-bottom:0}
-
-    .status{
-      display:inline-flex;
-      padding:5px 10px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:900;
-    }
-
-    .status.aktif{
-      background:#dcfce7;
-      color:#166534;
-    }
-
-    .status.nonaktif{
-      background:#fee2e2;
-      color:#991b1b;
-    }
-
-    .progress{
-      width:120px;
-      height:8px;
-      border-radius:999px;
-      overflow:hidden;
-      background:#e5e7eb;
-    }
-
-    .progress div{
-      height:100%;
-      border-radius:999px;
-      background:linear-gradient(90deg, var(--green), var(--dark));
-    }
-
-    .mobile-list{display:none}
-
-    .mobile-item{
-      background:#fff;
-      border:1px solid var(--border);
-      border-radius:18px;
-      padding:14px;
-      margin-bottom:10px;
-    }
-
-    .mobile-item-top{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:10px;
-    }
-
-    .mobile-item h3{
-      margin:0 0 3px;
-      font-size:15px;
-    }
-
-    .mobile-meta{
-      color:#6b7280;
-      font-size:11px;
-      line-height:1.4;
-    }
-
-    .mobile-money{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:8px;
-      margin-top:10px;
-    }
-
-    .money-box{
-      background:#f8fbf9;
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:10px;
-    }
-
-    .money-box span{
-      display:block;
-      font-size:10px;
-      color:#6b7280;
-      font-weight:800;
-      text-transform:uppercase;
-      margin-bottom:4px;
-    }
-
-    .money-box b{
-      font-size:13px;
-    }
-
-    .empty{
-      text-align:center;
-      color:#6b7280;
-      padding:22px;
-      font-size:13px;
-    }
-
-    .modal{
-      position:fixed;
-      inset:0;
-      z-index:1000;
-      display:grid;
-      place-items:center;
-      background:rgba(0,0,0,.42);
-      backdrop-filter:blur(4px);
-      padding:16px;
-    }
-
-    .modal-card{
-      width:min(420px, 100%);
-      background:#fff;
-      border-radius:22px;
-      padding:18px;
-      box-shadow:0 30px 80px rgba(0,0,0,.25);
-    }
-
-    .modal-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      margin-bottom:10px;
-    }
-
-    .modal-head h3{
-      margin:0;
-      font-size:18px;
-    }
-
-    .foot{
-      text-align:center;
-      color:#6b7280;
-      font-size:11px;
-      line-height:1.5;
-      margin-top:18px;
-    }
-
-    @media (max-width: 900px){
-      .login-card{grid-template-columns:1fr}
-      .summary{grid-template-columns:repeat(2,1fr)}
-      .admin-grid{grid-template-columns:1fr}
-      .topbar-inner{flex-direction:column; align-items:stretch}
-      .actions{width:100%; display:grid; grid-template-columns:1fr 1fr}
-      .actions .btn{width:100%}
-      .formula{grid-template-columns:1fr 1fr}
-    }
-
-    @media (max-width: 620px){
-      body{
-        background:#f5f7f5;
-      }
-
-      body::before{
-        font-size:110px;
-        right:6px;
-        bottom:4px;
-      }
-
-      .login-wrap{
-        padding:0;
-        align-items:stretch;
-      }
-
-      .login-card{
-        min-height:100vh;
-        border-radius:0;
-        box-shadow:none;
-      }
-
-      .hero{
-        padding:24px 18px 20px;
-        border-bottom-left-radius:28px;
-        border-bottom-right-radius:28px;
-      }
-
-      .hero h1{
-        font-size:36px;
-      }
-
-      .hero p{
-        font-size:13px;
-      }
-
-      .hero-grid{
-        grid-template-columns:1fr 1fr;
-        gap:10px;
-      }
-
-      .hero-box{
-        padding:12px;
-      }
-
-      .hero-box b{
-        font-size:18px;
-      }
-
-      .login-panel{
-        padding:20px 16px 26px;
-      }
-
-      .login-panel h2{
-        font-size:24px;
-      }
-
-      .desc{
-        font-size:13px;
-      }
-
-      input,select,textarea,button{
-        font-size:13px;
-      }
-
-      .page{
-        width:calc(100% - 14px);
-        padding-top:0;
-      }
-
-      .brand h1{
-        font-size:17px;
-      }
-
-      .brand p{
-        font-size:11px;
-      }
-
-      .summary{
-        grid-template-columns:1fr 1fr;
-        gap:10px;
-      }
-
-      .card{
-        padding:13px;
-        border-radius:18px;
-      }
-
-      .stat .label{
-        font-size:10px;
-      }
-
-      .stat .value{
-        font-size:18px;
-      }
-
-      .stat .small{
-        font-size:11px;
-      }
-
-      .formula{
-        grid-template-columns:1fr 1fr;
-        gap:10px;
-      }
-
-      .formula-box{
-        padding:11px;
-      }
-
-      .formula-box b{
-        font-size:13px;
-      }
-
-      .section-head h2{
-        font-size:16px;
-      }
-
-      .table-wrap{
-        display:none;
-      }
-
-      .mobile-list{
-        display:block;
-      }
-
-      .btn{
-        font-size:12px;
-        padding:11px 12px;
-      }
-    }
+    body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;color:var(--dark2);background:radial-gradient(circle at top left,rgba(15,107,69,.10),transparent 32%),radial-gradient(circle at bottom right,rgba(17,24,39,.08),transparent 28%),var(--bg)}
+    body::before{content:"🐄";position:fixed;right:8px;bottom:4px;font-size:130px;opacity:.045;pointer-events:none;z-index:0;filter:grayscale(100%)}
+    input,select,textarea,button{font-family:inherit;font-size:14px} button{-webkit-tap-highlight-color:transparent}.hidden{display:none!important}
+    .loading{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.35);backdrop-filter:blur(4px);display:grid;place-items:center;padding:16px}
+    .loading-box{width:min(300px,100%);background:#fff;border-radius:22px;padding:20px;box-shadow:0 25px 65px rgba(0,0,0,.2);text-align:center}
+    .spinner{width:32px;height:32px;margin:0 auto 10px;border-radius:50%;border:4px solid #d1fae5;border-top-color:var(--green);animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+    .login-wrap{min-height:100vh;display:grid;place-items:center;padding:14px;position:relative;z-index:1}
+    .login-card{width:min(1020px,100%);display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,.95);border-radius:32px;overflow:hidden;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.9)}
+    .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#0b0f0d,#0f6b45 55%,#14532d);color:#fff;padding:34px}.hero::after{content:"🐄";position:absolute;right:10px;bottom:-10px;font-size:180px;opacity:.08;filter:grayscale(100%)}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);font-weight:800;font-size:13px}
+    .hero h1{margin:20px 0 10px;font-size:48px;line-height:.95;letter-spacing:-1.5px}.hero p{margin:0;line-height:1.7;color:rgba(255,255,255,.88);max-width:440px;font-size:15px}
+    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}.hero-box{padding:16px;border-radius:18px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16)}.hero-box b{display:block;font-size:22px;margin-bottom:4px}.hero-box span{font-size:12px;color:rgba(255,255,255,.82)}
+    .login-panel{padding:34px;display:flex;flex-direction:column;justify-content:center}.login-panel h2{margin:0 0 8px;font-size:28px;color:var(--dark)}.desc{margin:0 0 18px;color:var(--muted);line-height:1.6;font-size:14px}
+    .tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;background:#e9efeb;border-radius:18px;margin-bottom:16px}.tab{border:0;background:transparent;padding:12px;border-radius:14px;font-weight:900;color:#64748b;cursor:pointer}.tab.active{background:#fff;color:var(--green);box-shadow:0 8px 18px rgba(0,0,0,.06)}
+    .field{margin-bottom:12px}.field label{display:block;font-size:12px;font-weight:800;color:#4b5563;margin-bottom:6px;letter-spacing:.02em}.field input,.field select,.field textarea{width:100%;border:1px solid var(--border);background:#fff;border-radius:16px;padding:13px 14px;outline:none;color:var(--dark2)}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green);box-shadow:0 0 0 4px rgba(15,107,69,.08)}
+    .btn{border:0;border-radius:16px;padding:12px 14px;cursor:pointer;font-weight:900;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-size:13px}.btn-primary{background:linear-gradient(135deg,var(--dark),var(--green));color:#fff;box-shadow:0 10px 24px rgba(15,107,69,.22)}.btn-light{background:#eef3ef;color:var(--dark2)}.btn-danger{background:#fee2e2;color:#991b1b}.btn-success{background:#dcfce7;color:#166534}.btn-warning{background:#fef3c7;color:#92400e}.btn-sm{padding:8px 10px;font-size:12px;border-radius:12px}.full{width:100%}
+    .alert{padding:12px 14px;border-radius:14px;font-size:13px;line-height:1.45;margin-bottom:12px}.alert-error{background:#fee2e2;color:#7f1d1d;border:1px solid #fecaca}.alert-success{background:#dcfce7;color:#14532d;border:1px solid #bbf7d0}
+    .page{width:min(1180px,calc(100% - 20px));margin:0 auto;padding:12px 0 34px;position:relative;z-index:1}.topbar{position:sticky;top:0;z-index:10;background:rgba(245,247,245,.92);backdrop-filter:blur(10px);padding:10px 0 12px;margin-bottom:12px}.topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:10px;min-width:0}.logo{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--dark),var(--green));color:#fff;display:grid;place-items:center;font-size:22px;font-weight:900;box-shadow:0 10px 22px rgba(15,107,69,.22);flex:0 0 auto}.brand h1{margin:0;font-size:22px;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}.card{background:rgba(255,255,255,.96);border:1px solid rgba(255,255,255,.9);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}.stat .label{color:#6b7280;font-size:12px;font-weight:900;margin-bottom:6px;text-transform:uppercase;letter-spacing:.03em}.stat .value{font-size:24px;font-weight:900;color:var(--dark);letter-spacing:-.8px}.stat .small{margin-top:5px;color:#6b7280;font-size:12px;line-height:1.45}
+    .chart-wrap{height:12px;border-radius:999px;background:#e5e7eb;overflow:hidden;margin-top:8px}.chart-bar{height:100%;background:linear-gradient(90deg,var(--green),var(--dark));border-radius:999px;width:0%}
+    .formula{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px}.formula-box{background:#f8fbf9;border:1px solid var(--border);border-radius:18px;padding:14px}.formula-box span{display:block;color:#6b7280;font-size:11px;font-weight:800;text-transform:uppercase;margin-bottom:6px}.formula-box b{font-size:16px;color:var(--dark)}
+    .my-card{border:1px solid rgba(15,107,69,.22);background:linear-gradient(135deg,#ffffff,#effaf3)}
+    .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.section-head h2{margin:0;font-size:18px;color:var(--dark)}
+    .table-card{margin-bottom:14px}.table-wrap{overflow-x:auto;background:#fff;border:1px solid var(--border);border-radius:18px}table{width:100%;min-width:880px;border-collapse:collapse}th,td{padding:12px 13px;border-bottom:1px solid var(--border);text-align:left;vertical-align:middle;font-size:13px}th{background:#f7faf8;color:#6b7280;text-transform:uppercase;font-size:11px;letter-spacing:.04em}tr:last-child td{border-bottom:0}
+    .status{display:inline-flex;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:900}.status.aktif,.status.lunas{background:#dcfce7;color:#166534}.status.nonaktif,.status.belum{background:#fee2e2;color:#991b1b}
+    .progress{width:120px;height:8px;border-radius:999px;overflow:hidden;background:#e5e7eb}.progress div{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--green),var(--dark))}
+    .mobile-list{display:none}.mobile-item{background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px;margin-bottom:10px}.mobile-item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.mobile-item h3{margin:0 0 3px;font-size:15px}.mobile-meta{color:#6b7280;font-size:11px;line-height:1.4}.mobile-money{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.money-box{background:#f8fbf9;border:1px solid var(--border);border-radius:14px;padding:10px}.money-box span{display:block;font-size:10px;color:#6b7280;font-weight:800;text-transform:uppercase;margin-bottom:4px}.money-box b{font-size:13px}.empty{text-align:center;color:#6b7280;padding:22px;font-size:13px}
+    .detail-box{margin-top:10px;background:#f8fbf9;border:1px solid var(--border);border-radius:14px;padding:10px}.detail-row{display:flex;justify-content:space-between;gap:8px;font-size:12px;padding:6px 0;border-bottom:1px dashed #d9e2dc}.detail-row:last-child{border-bottom:0}
+    .modal{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:rgba(0,0,0,.42);backdrop-filter:blur(4px);padding:16px}.modal-card{width:min(420px,100%);background:#fff;border-radius:22px;padding:18px;box-shadow:0 30px 80px rgba(0,0,0,.25)}.modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.modal-head h3{margin:0;font-size:18px}.foot{text-align:center;color:#6b7280;font-size:11px;line-height:1.5;margin-top:18px}
+    @media(max-width:900px){.login-card{grid-template-columns:1fr}.summary{grid-template-columns:repeat(2,1fr)}.admin-grid{grid-template-columns:1fr}.topbar-inner{flex-direction:column;align-items:stretch}.actions{width:100%;display:grid;grid-template-columns:1fr 1fr}.actions .btn{width:100%}.formula{grid-template-columns:1fr 1fr}}
+    @media(max-width:620px){body{background:#f5f7f5}body::before{font-size:100px;right:6px;bottom:4px}.login-wrap{padding:0;align-items:stretch}.login-card{min-height:100vh;border-radius:0;box-shadow:none}.hero{padding:24px 18px 20px;border-bottom-left-radius:28px;border-bottom-right-radius:28px}.hero h1{font-size:34px}.hero p{font-size:13px}.hero-grid{grid-template-columns:1fr 1fr;gap:10px}.hero-box{padding:12px}.hero-box b{font-size:17px}.login-panel{padding:20px 16px 26px}.login-panel h2{font-size:23px}.desc{font-size:13px}input,select,textarea,button{font-size:13px}.page{width:calc(100% - 14px);padding-top:0}.brand h1{font-size:17px}.brand p{font-size:11px}.summary{grid-template-columns:1fr 1fr;gap:10px}.card{padding:13px;border-radius:18px}.stat .label{font-size:10px}.stat .value{font-size:18px}.stat .small{font-size:11px}.formula{grid-template-columns:1fr 1fr;gap:10px}.formula-box{padding:11px}.formula-box b{font-size:13px}.section-head h2{font-size:16px}.table-wrap{display:none}.mobile-list{display:block}.btn{font-size:12px;padding:11px 12px}}
   </style>
 </head>
 
@@ -803,29 +52,16 @@
       <div class="hero">
         <div class="hero-badge">🐄 Sistem Tabungan Qurban</div>
         <h1>Keluarga Besar H.M. Amin</h1>
-        <p>
-          Sistem tabungan qurban keluarga dengan nuansa islami untuk memantau
-          setoran, harga sapi, target per orang, dan kekurangan dana secara otomatis.
-        </p>
-
+        <p>Sistem tabungan qurban keluarga dengan nuansa islami untuk memantau setoran, harga sapi, target per orang, dan kekurangan dana secara otomatis.</p>
         <div class="hero-grid">
-          <div class="hero-box">
-            <b>Hijau & Hitam</b>
-            <span>Nuansa islamic premium</span>
-          </div>
-          <div class="hero-box">
-            <b>Harga Sapi</b>
-            <span>Hitung otomatis + markup 10%</span>
-          </div>
+          <div class="hero-box"><b>Semua Bisa Lihat</b><span>Peserta melihat data lengkap</span></div>
+          <div class="hero-box"><b>Admin Mengelola</b><span>Edit, input, hapus hanya admin</span></div>
         </div>
       </div>
 
       <div class="login-panel">
         <h2>Masuk Aplikasi</h2>
-        <p class="desc">
-          Peserta masuk cukup dengan nama. Admin masuk dengan akun pengelola.
-        </p>
-
+        <p class="desc">Peserta masuk cukup dengan nama. Admin masuk dengan akun pengelola.</p>
         <div id="initAlert"></div>
 
         <div class="tabs">
@@ -845,14 +81,8 @@
         </div>
 
         <div id="adminBox" class="hidden">
-          <div class="field">
-            <label>Username Admin</label>
-            <input id="adminUsername" placeholder="Masukkan username admin" />
-          </div>
-          <div class="field">
-            <label>Password Admin</label>
-            <input id="adminPassword" type="password" placeholder="Masukkan password admin" />
-          </div>
+          <div class="field"><label>Username Admin</label><input id="adminUsername" placeholder="Masukkan username admin" /></div>
+          <div class="field"><label>Password Admin</label><input id="adminPassword" type="password" placeholder="Masukkan password admin" /></div>
           <button class="btn btn-primary full" onclick="loginAdmin()">Masuk sebagai Admin</button>
         </div>
       </div>
@@ -870,132 +100,65 @@
               <p id="userInfo">Masuk sebagai peserta</p>
             </div>
           </div>
-
           <div class="actions">
             <button class="btn btn-light" onclick="refreshDashboard(true)">Refresh</button>
             <button id="passwordBtn" class="btn btn-light hidden" onclick="openPasswordModal()">Password</button>
-            <button id="exportBtn" class="btn btn-warning hidden" onclick="exportPdf()">Export PDF</button>
+            <button class="btn btn-warning" onclick="exportPdf()">Export PDF</button>
+            <button class="btn btn-success" onclick="exportExcel()">Export Excel</button>
             <button id="sheetBtn" class="btn btn-light hidden" onclick="openSpreadsheet()">Database</button>
             <button class="btn btn-danger" onclick="logout()">Keluar</button>
           </div>
         </div>
       </div>
 
+      <div id="myPositionCard" class="card my-card hidden" style="margin-bottom:14px;"></div>
+
       <div class="summary">
+        <div class="card stat"><div class="label">Peserta Aktif</div><div class="value" id="sumPeserta">0</div><div class="small">Anggota aktif terdaftar</div></div>
+        <div class="card stat"><div class="label">Peserta Lunas</div><div class="value" id="sumLunas">0</div><div class="small">Status otomatis lunas</div></div>
+        <div class="card stat"><div class="label">Belum Lunas</div><div class="value" id="sumBelumLunas">0</div><div class="small">Masih ada kekurangan</div></div>
+        <div class="card stat"><div class="label">Total Tabungan</div><div class="value" id="sumTabungan">Rp0</div><div class="small">Setoran terkumpul</div></div>
+        <div class="card stat"><div class="label">Target / Orang</div><div class="value" id="sumTargetOrang">Rp0</div><div class="small">Otomatis dari harga sapi</div></div>
         <div class="card stat">
-          <div class="label">Peserta Aktif</div>
-          <div class="value" id="sumPeserta">0</div>
-          <div class="small">Jumlah anggota aktif yang terdaftar</div>
-        </div>
-
-        <div class="card stat">
-          <div class="label">Total Tabungan</div>
-          <div class="value" id="sumTabungan">Rp0</div>
-          <div class="small">Total setoran yang sudah terkumpul</div>
-        </div>
-
-        <div class="card stat">
-          <div class="label">Total Harga Sapi</div>
-          <div class="value" id="sumHargaSapi">Rp0</div>
-          <div class="small">Akumulasi harga sapi 1, 2, dan 3</div>
-        </div>
-
-        <div class="card stat">
-          <div class="label">Markup 10%</div>
-          <div class="value" id="sumMarkup">Rp0</div>
-          <div class="small">Cadangan kebutuhan tambahan qurban</div>
-        </div>
-
-        <div class="card stat">
-          <div class="label">Target / Orang</div>
-          <div class="value" id="sumTargetOrang">Rp0</div>
-          <div class="small">Kewajiban ideal masing-masing peserta</div>
-        </div>
-
-        <div class="card stat">
-          <div class="label">Kekurangan Total</div>
-          <div class="value" id="sumKurang">Rp0</div>
-          <div class="small" id="sumPersen">Progress 0%</div>
+          <div class="label">Progress Total</div>
+          <div class="value" id="sumPersenValue">0%</div>
+          <div class="chart-wrap"><div id="progressTotalBar" class="chart-bar"></div></div>
+          <div class="small" id="sumKurang">Kekurangan Rp0</div>
         </div>
       </div>
 
       <div class="card" style="margin-bottom:14px;">
-        <div class="section-head">
-          <h2>Ringkasan Perhitungan Qurban</h2>
-        </div>
-
+        <div class="section-head"><h2>Ringkasan Harga Sapi</h2></div>
         <div class="formula">
-          <div class="formula-box">
-            <span>Harga Sapi 1</span>
-            <b id="calcSapi1">Rp0</b>
-          </div>
-          <div class="formula-box">
-            <span>Harga Sapi 2</span>
-            <b id="calcSapi2">Rp0</b>
-          </div>
-          <div class="formula-box">
-            <span>Harga Sapi 3</span>
-            <b id="calcSapi3">Rp0</b>
-          </div>
-          <div class="formula-box">
-            <span>Total Kebutuhan</span>
-            <b id="calcTotalKebutuhan">Rp0</b>
-          </div>
-        </div>
-
-        <div style="margin-top:10px;font-size:12px;color:#6b7280;line-height:1.6;">
-          Rumus otomatis:
-          <b>(Harga Sapi 1 + Harga Sapi 2 + Harga Sapi 3) + 10%</b>,
-          lalu dibagi jumlah peserta aktif untuk mendapatkan target tabungan per orang.
+          <div class="formula-box"><span>Harga Sapi 1</span><b id="calcSapi1">Rp0</b></div>
+          <div class="formula-box"><span>Harga Sapi 2</span><b id="calcSapi2">Rp0</b></div>
+          <div class="formula-box"><span>Harga Sapi 3</span><b id="calcSapi3">Rp0</b></div>
+          <div class="formula-box"><span>Total + Markup 10%</span><b id="calcTotalKebutuhan">Rp0</b></div>
         </div>
       </div>
 
       <div id="adminPanel" class="admin-grid hidden">
         <div class="card">
-          <div class="section-head">
-            <h2>Pengaturan Harga Qurban</h2>
-          </div>
-
-          <div class="field">
-            <label>Harga Sapi 1</label>
-            <input id="hargaSapi1" inputmode="numeric" placeholder="Contoh: 25000000" />
-          </div>
-
-          <div class="field">
-            <label>Harga Sapi 2</label>
-            <input id="hargaSapi2" inputmode="numeric" placeholder="Contoh: 27000000" />
-          </div>
-
-          <div class="field">
-            <label>Harga Sapi 3</label>
-            <input id="hargaSapi3" inputmode="numeric" placeholder="Contoh: 26000000" />
-          </div>
-
-          <div class="field">
-            <label>Markup Tambahan</label>
-            <input value="10%" disabled />
-          </div>
-
+          <div class="section-head"><h2>Pengaturan Harga Qurban</h2></div>
+          <div class="field"><label>Harga Sapi 1</label><input id="hargaSapi1" inputmode="numeric" placeholder="Contoh: 25000000" /></div>
+          <div class="field"><label>Harga Sapi 2</label><input id="hargaSapi2" inputmode="numeric" placeholder="Contoh: 27000000" /></div>
+          <div class="field"><label>Harga Sapi 3</label><input id="hargaSapi3" inputmode="numeric" placeholder="Contoh: 26000000" /></div>
+          <div class="field"><label>Markup Tambahan</label><input value="10%" disabled /></div>
           <button class="btn btn-primary" onclick="saveQurbanSettings()">Simpan Pengaturan Qurban</button>
         </div>
 
         <div class="card">
-          <div class="section-head">
-            <h2>Tambah / Edit Peserta</h2>
-          </div>
+          <div class="section-head"><h2>Identitas Qurban</h2></div>
+          <div class="field"><label>Tahun Qurban</label><input id="tahunQurban" placeholder="Contoh: 2026 / 1447 H" /></div>
+          <div class="field"><label>Nama Panitia / Keluarga</label><input id="namaPanitia" placeholder="Contoh: Keluarga Besar H.M. Amin" /></div>
+          <button class="btn btn-primary" onclick="saveIdentitySettings()">Simpan Identitas</button>
+        </div>
 
+        <div class="card">
+          <div class="section-head"><h2>Tambah / Edit Peserta</h2></div>
           <input type="hidden" id="participantId" />
-
-          <div class="field">
-            <label>Nama Peserta</label>
-            <input id="formName" placeholder="Contoh: Budi Legawan" />
-          </div>
-
-          <div class="field">
-            <label>No. HP</label>
-            <input id="formPhone" placeholder="Opsional" />
-          </div>
-
+          <div class="field"><label>Nama Peserta</label><input id="formName" placeholder="Contoh: Budi Legawan" /></div>
+          <div class="field"><label>No. HP</label><input id="formPhone" placeholder="Opsional" /></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
             <button class="btn btn-primary" onclick="saveParticipant()">Simpan Peserta</button>
             <button class="btn btn-light" onclick="resetParticipantForm()">Reset</button>
@@ -1003,126 +166,65 @@
         </div>
 
         <div class="card">
-          <div class="section-head">
-            <h2>Input Setoran</h2>
-          </div>
-
-          <div class="field">
-            <label>Peserta</label>
-            <select id="depositParticipant"></select>
-          </div>
-
-          <div class="field">
-            <label>Tanggal Setoran</label>
-            <input id="depositDate" type="date" />
-          </div>
-
-          <div class="field">
-            <label>Jumlah Setoran</label>
-            <input id="depositAmount" inputmode="numeric" placeholder="Contoh: 100000" />
-          </div>
-
-          <div class="field">
-            <label>Keterangan</label>
-            <textarea id="depositNote" rows="2" placeholder="Contoh: Setoran bulan ini"></textarea>
-          </div>
-
+          <div class="section-head"><h2>Input Setoran</h2></div>
+          <div class="field"><label>Peserta</label><select id="depositParticipant"></select></div>
+          <div class="field"><label>Tanggal Setoran</label><input id="depositDate" type="date" /></div>
+          <div class="field"><label>Jumlah Setoran</label><input id="depositAmount" inputmode="numeric" placeholder="Contoh: 100000" /></div>
+          <div class="field"><label>Keterangan</label><textarea id="depositNote" rows="2" placeholder="Contoh: Setoran bulan ini"></textarea></div>
           <button class="btn btn-primary" onclick="addDeposit()">Simpan Setoran</button>
-        </div>
-
-        <div class="card">
-          <div class="section-head">
-            <h2>Catatan Sistem</h2>
-          </div>
-
-          <div style="font-size:12px;color:#6b7280;line-height:1.7;">
-            <b>Catatan:</b><br>
-            1. Target per orang dihitung otomatis dari total kebutuhan qurban.<br>
-            2. Total kebutuhan = total harga sapi + markup 10%.<br>
-            3. Peserta aktif yang digunakan sebagai pembagi target.<br>
-            4. Peserta nonaktif tidak dihitung dalam target pembagian.
-          </div>
         </div>
       </div>
 
       <div class="card table-card">
         <div class="section-head">
           <h2>Rincian Tabungan Peserta</h2>
-          <span id="participantCount" style="color:#6b7280;font-size:12px;"></span>
+          <select id="filterPeserta" onchange="applyParticipantFilter()" style="max-width:160px;border:1px solid var(--border);border-radius:12px;padding:8px;font-size:12px;">
+            <option value="SEMUA">Semua</option>
+            <option value="AKTIF">Aktif</option>
+            <option value="NONAKTIF">Nonaktif</option>
+            <option value="LUNAS">Lunas</option>
+            <option value="BELUM_LUNAS">Belum Lunas</option>
+          </select>
         </div>
+        <div style="color:#6b7280;font-size:12px;margin-bottom:10px;" id="participantCount"></div>
 
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Status</th>
-                <th>Target / Orang</th>
-                <th>Terkumpul</th>
-                <th>Kekurangan</th>
-                <th>Progress</th>
-                <th class="admin-only hidden">Aksi</th>
+                <th>No</th><th>Nama</th><th>Status</th><th>Bayar</th><th>Target / Orang</th><th>Terkumpul</th><th>Kekurangan</th><th>Progress</th><th>Detail</th><th class="admin-only hidden">Aksi</th>
               </tr>
             </thead>
             <tbody id="participantsBody"></tbody>
           </table>
         </div>
-
         <div id="participantsMobile" class="mobile-list"></div>
       </div>
 
       <div class="card table-card">
-        <div class="section-head">
-          <h2>Riwayat Setoran</h2>
-        </div>
-
+        <div class="section-head"><h2>Riwayat Setoran</h2></div>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>Tanggal</th>
-                <th>Nama</th>
-                <th>Jumlah</th>
-                <th>Keterangan</th>
-                <th class="admin-only hidden">Aksi</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Tanggal</th><th>Nama</th><th>Jumlah</th><th>Keterangan</th><th class="admin-only hidden">Aksi</th></tr></thead>
             <tbody id="depositsBody"></tbody>
           </table>
         </div>
-
         <div id="depositsMobile" class="mobile-list"></div>
       </div>
-
-      <div class="foot">
-        Semoga menjadi wasilah kebaikan, persatuan keluarga, dan qurban yang diterima Allah.
-      </div>
+      <div class="foot">Semoga menjadi wasilah kebaikan, persatuan keluarga, dan qurban yang diterima Allah.</div>
     </div>
   </div>
 
   <div id="passwordModal" class="modal hidden">
     <div class="modal-card">
-      <div class="modal-head">
-        <h3>Ubah Password Admin</h3>
-        <button class="btn btn-light btn-sm" onclick="closePasswordModal()">Tutup</button>
-      </div>
-
-      <div class="field">
-        <label>Password Baru</label>
-        <input id="newAdminPassword" type="password" placeholder="Minimal 6 karakter" />
-      </div>
-
+      <div class="modal-head"><h3>Ubah Password Admin</h3><button class="btn btn-light btn-sm" onclick="closePasswordModal()">Tutup</button></div>
+      <div class="field"><label>Password Baru</label><input id="newAdminPassword" type="password" placeholder="Minimal 6 karakter" /></div>
       <button class="btn btn-primary full" onclick="changeAdminPassword()">Simpan Password Baru</button>
     </div>
   </div>
 
   <div id="loading" class="loading hidden">
-    <div class="loading-box">
-      <div class="spinner"></div>
-      <h3 style="margin:0 0 6px;font-size:16px;">Memproses</h3>
-      <p style="margin:0;color:#6b7280;font-size:12px;">Mohon tunggu sebentar.</p>
-    </div>
+    <div class="loading-box"><div class="spinner"></div><h3 style="margin:0 0 6px;font-size:16px;">Memproses</h3><p style="margin:0;color:#6b7280;font-size:12px;">Mohon tunggu sebentar.</p></div>
   </div>
 
   <script>
@@ -1130,140 +232,73 @@
 
     let currentRole = "";
     let currentName = "";
+    let currentParticipantId = "";
     let adminUsername = "";
     let adminPassword = "";
     let currentParticipantsData = [];
+    let currentDepositsData = [];
     let currentSettings = null;
 
     document.addEventListener("DOMContentLoaded", function () {
+      setupRupiahInputs();
       const dateInput = document.getElementById("depositDate");
       if (dateInput) dateInput.valueAsDate = new Date();
-
       loadInitialData();
     });
 
     function api(params) {
       return new Promise(function (resolve, reject) {
         const callbackName = "jsonp_callback_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
-
-        params = params || {};
-        params.callback = callbackName;
-        params._ = Date.now();
-
-        const query = Object.keys(params)
-          .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(params[key]))
-          .join("&");
-
+        params = params || {}; params.callback = callbackName; params._ = Date.now();
+        const query = Object.keys(params).map(key => encodeURIComponent(key) + "=" + encodeURIComponent(params[key])).join("&");
         const script = document.createElement("script");
         script.src = API_URL + "?" + query;
-
-        const timeout = setTimeout(function () {
-          cleanup();
-          reject(new Error("Koneksi lambat atau API tidak merespons."));
-        }, 20000);
-
-        window[callbackName] = function (data) {
-          clearTimeout(timeout);
-          cleanup();
-          resolve(data);
-        };
-
-        script.onerror = function () {
-          clearTimeout(timeout);
-          cleanup();
-          reject(new Error("Gagal menghubungi API. Periksa deployment Apps Script."));
-        };
-
-        function cleanup() {
-          delete window[callbackName];
-          if (script.parentNode) script.parentNode.removeChild(script);
-        }
-
+        const timeout = setTimeout(function () { cleanup(); reject(new Error("Koneksi lambat atau API tidak merespons.")); }, 25000);
+        window[callbackName] = function (data) { clearTimeout(timeout); cleanup(); resolve(data); };
+        script.onerror = function () { clearTimeout(timeout); cleanup(); reject(new Error("Gagal menghubungi API. Periksa deployment Apps Script.")); };
+        function cleanup() { delete window[callbackName]; if (script.parentNode) script.parentNode.removeChild(script); }
         document.body.appendChild(script);
       });
     }
 
     function adminAuthParams(extra) {
-      extra = extra || {};
-      extra.username = adminUsername;
-      extra.password = adminPassword;
-      return extra;
+      extra = extra || {}; extra.username = adminUsername; extra.password = adminPassword; return extra;
     }
-
-    function showLoading(show) {
-      document.getElementById("loading").classList.toggle("hidden", !show);
-    }
-
-    function cleanNumber(value) {
-      return String(value || "").replace(/[^\d]/g, "");
-    }
-
-    function rupiah(value) {
-      return "Rp" + Number(value || 0).toLocaleString("id-ID");
-    }
-
-    function escapeHtml(text) {
-      return String(text || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function showAlert(id, message, type) {
-      const el = document.getElementById(id);
-      if (!el) return;
-
-      el.innerHTML = `
-        <div class="alert ${type === "success" ? "alert-success" : "alert-error"}">
-          ${message}
-        </div>
-      `;
-    }
-
-    function clearAlert(id) {
-      const el = document.getElementById(id);
-      if (el) el.innerHTML = "";
+    function showLoading(show) { document.getElementById("loading").classList.toggle("hidden", !show); }
+    function cleanNumber(value) { return String(value || "").replace(/[^\d]/g, ""); }
+    function rupiah(value) { return "Rp" + Number(value || 0).toLocaleString("id-ID"); }
+    function escapeHtml(text) { return String(text || "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;"); }
+    function showAlert(id, message, type) { const el=document.getElementById(id); if(!el)return; el.innerHTML = `<div class="alert ${type === "success" ? "alert-success" : "alert-error"}">${message}</div>`; }
+    function clearAlert(id) { const el=document.getElementById(id); if(el)el.innerHTML=""; }
+    function formatRupiahInput(el) { const angka = cleanNumber(el.value); el.value = angka ? Number(angka).toLocaleString("id-ID") : ""; }
+    function setupRupiahInputs() {
+      ["hargaSapi1","hargaSapi2","hargaSapi3","depositAmount"].forEach(function(id){
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener("input", function(){ formatRupiahInput(el); });
+      });
     }
 
     async function loadInitialData() {
       showLoading(true);
-
       try {
-        const res = await api({ action: "init" });
+        const res = await api({ action:"init" });
         showLoading(false);
-
-        if (!res || !res.ok) {
-          showAlert("initAlert", escapeHtml((res && res.message) || "Aplikasi belum siap."), "error");
-          return;
-        }
-
+        if (!res || !res.ok) { showAlert("initAlert", escapeHtml((res && res.message) || "Aplikasi belum siap."), "error"); return; }
         fillParticipantDatalist(res.participants || []);
         clearAlert("initAlert");
-      } catch (err) {
-        showLoading(false);
-        showAlert("initAlert", escapeHtml(err.message || err), "error");
-      }
+      } catch (err) { showLoading(false); showAlert("initAlert", escapeHtml(err.message || err), "error"); }
     }
 
     function fillParticipantDatalist(participants) {
-      const list = document.getElementById("participantList");
-      list.innerHTML = "";
-
-      participants.forEach(function (p) {
-        const option = document.createElement("option");
-        option.value = p.nama;
-        list.appendChild(option);
-      });
+      const list = document.getElementById("participantList"); list.innerHTML = "";
+      participants.forEach(function(p){ const option = document.createElement("option"); option.value = p.nama; list.appendChild(option); });
     }
 
     function switchTab(type) {
       clearAlert("loginAlert");
-
       document.getElementById("tabPeserta").classList.toggle("active", type === "peserta");
       document.getElementById("tabAdmin").classList.toggle("active", type === "admin");
-
       document.getElementById("pesertaBox").classList.toggle("hidden", type !== "peserta");
       document.getElementById("adminBox").classList.toggle("hidden", type !== "admin");
     }
@@ -1271,596 +306,324 @@
     async function loginPeserta() {
       clearAlert("loginAlert");
       const name = document.getElementById("participantName").value.trim();
-
-      if (!name) {
-        showAlert("loginAlert", "Nama peserta wajib diisi.", "error");
-        return;
-      }
-
+      if (!name) { showAlert("loginAlert", "Nama peserta wajib diisi.", "error"); return; }
       showLoading(true);
-
       try {
-        const res = await api({
-          action: "loginParticipant",
-          name: name
-        });
-
+        const res = await api({ action:"loginParticipant", name:name });
         showLoading(false);
-
-        if (!res || !res.ok) {
-          showAlert("loginAlert", escapeHtml((res && res.message) || "Login gagal."), "error");
-          return;
-        }
-
-        currentRole = "peserta";
-        currentName = res.name || name;
+        if (!res || !res.ok) { showAlert("loginAlert", escapeHtml((res && res.message) || "Login gagal."), "error"); return; }
+        currentRole = "peserta"; currentName = res.name || name; currentParticipantId = res.participantId || "";
         enterApp();
-      } catch (err) {
-        showLoading(false);
-        showAlert("loginAlert", escapeHtml(err.message || err), "error");
-      }
+      } catch(err) { showLoading(false); showAlert("loginAlert", escapeHtml(err.message || err), "error"); }
     }
 
     async function loginAdmin() {
       clearAlert("loginAlert");
-
       const username = document.getElementById("adminUsername").value.trim();
       const password = document.getElementById("adminPassword").value.trim();
-
       showLoading(true);
-
       try {
-        const res = await api({
-          action: "loginAdmin",
-          username: username,
-          password: password
-        });
-
+        const res = await api({ action:"loginAdmin", username:username, password:password });
         showLoading(false);
-
-        if (!res || !res.ok) {
-          showAlert("loginAlert", escapeHtml((res && res.message) || "Login gagal."), "error");
-          return;
-        }
-
-        currentRole = "admin";
-        currentName = "Admin";
-        adminUsername = username;
-        adminPassword = password;
-
+        if (!res || !res.ok) { showAlert("loginAlert", escapeHtml((res && res.message) || "Login gagal."), "error"); return; }
+        currentRole = "admin"; currentName = "Admin"; adminUsername = username; adminPassword = password; currentParticipantId = "";
         enterApp();
-      } catch (err) {
-        showLoading(false);
-        showAlert("loginAlert", escapeHtml(err.message || err), "error");
-      }
+      } catch(err) { showLoading(false); showAlert("loginAlert", escapeHtml(err.message || err), "error"); }
     }
 
     function enterApp() {
       document.getElementById("loginView").classList.add("hidden");
       document.getElementById("appView").classList.remove("hidden");
-
-      document.getElementById("userInfo").textContent =
-        currentRole === "admin"
-          ? "Masuk sebagai Admin"
-          : "Masuk sebagai Peserta: " + currentName;
-
+      document.getElementById("userInfo").textContent = currentRole === "admin" ? "Masuk sebagai Admin" : "Masuk sebagai Peserta: " + currentName;
       document.getElementById("adminPanel").classList.toggle("hidden", currentRole !== "admin");
-      document.getElementById("exportBtn").classList.toggle("hidden", currentRole !== "admin");
       document.getElementById("sheetBtn").classList.toggle("hidden", currentRole !== "admin");
       document.getElementById("passwordBtn").classList.toggle("hidden", currentRole !== "admin");
-
-      document.querySelectorAll(".admin-only").forEach(el => {
-        el.classList.toggle("hidden", currentRole !== "admin");
-      });
-
+      document.querySelectorAll(".admin-only").forEach(el => el.classList.toggle("hidden", currentRole !== "admin"));
       refreshDashboard(true);
     }
 
     function logout() {
-      currentRole = "";
-      currentName = "";
-      adminUsername = "";
-      adminPassword = "";
-      currentParticipantsData = [];
-      currentSettings = null;
-
+      currentRole = ""; currentName = ""; currentParticipantId = ""; adminUsername = ""; adminPassword = "";
+      currentParticipantsData = []; currentDepositsData = []; currentSettings = null;
       document.getElementById("appView").classList.add("hidden");
       document.getElementById("loginView").classList.remove("hidden");
       document.getElementById("adminPassword").value = "";
       clearAlert("loginAlert");
-
       loadInitialData();
     }
 
     async function refreshDashboard(force) {
       showLoading(true);
-
       try {
-        const res = await api({
-          action: "dashboard",
-          role: currentRole
-        });
-
+        const res = await api({ action:"dashboard", role: currentRole, participant_id: currentParticipantId });
         showLoading(false);
-
-        if (!res || !res.ok) {
-          alert(((res && res.message) || "Dashboard gagal dimuat.") + "\n\n" + ((res && res.detail) || ""));
-          return;
-        }
-
+        if (!res || !res.ok) { alert(((res && res.message) || "Dashboard gagal dimuat.") + "\n\n" + ((res && res.detail) || "")); return; }
         renderDashboard(res);
-      } catch (err) {
-        showLoading(false);
-        alert(err.message || err);
-      }
+      } catch(err) { showLoading(false); alert(err.message || err); }
     }
 
     function renderDashboard(data) {
-      const s = data.summary || {};
-      const settings = data.settings || {};
-      const participants = data.participants || [];
-      const deposits = data.deposits || [];
-
-      currentSettings = settings;
-      currentParticipantsData = participants;
+      const s = data.summary || {}, settings = data.settings || {}, participants = data.participants || [], deposits = data.deposits || [];
+      currentSettings = settings; currentParticipantsData = participants; currentDepositsData = deposits;
 
       document.getElementById("sumPeserta").textContent = s.jumlahPesertaAktif || 0;
+      document.getElementById("sumLunas").textContent = s.jumlahLunas || 0;
+      document.getElementById("sumBelumLunas").textContent = s.jumlahBelumLunas || 0;
       document.getElementById("sumTabungan").textContent = rupiah(s.totalTabungan || 0);
-      document.getElementById("sumHargaSapi").textContent = rupiah(s.totalHargaSapi || 0);
-      document.getElementById("sumMarkup").textContent = rupiah(s.markupNominal || 0);
       document.getElementById("sumTargetOrang").textContent = rupiah(s.targetPerOrang || 0);
-      document.getElementById("sumKurang").textContent = rupiah(s.totalKekurangan || 0);
-      document.getElementById("sumPersen").textContent = "Progress " + (s.persenTotal || 0) + "%";
+      document.getElementById("sumPersenValue").textContent = (s.persenTotal || 0) + "%";
+      document.getElementById("sumKurang").textContent = "Kekurangan " + rupiah(s.totalKekurangan || 0);
+      document.getElementById("progressTotalBar").style.width = Math.min(Number(s.persenTotal || 0), 100) + "%";
 
       document.getElementById("calcSapi1").textContent = rupiah(settings.harga_sapi_1 || 0);
       document.getElementById("calcSapi2").textContent = rupiah(settings.harga_sapi_2 || 0);
       document.getElementById("calcSapi3").textContent = rupiah(settings.harga_sapi_3 || 0);
       document.getElementById("calcTotalKebutuhan").textContent = rupiah(s.totalKebutuhan || 0);
 
-      document.getElementById("participantCount").textContent = participants.length + " peserta ditampilkan";
-
       fillQurbanForm(settings);
-      renderParticipants(participants);
-      renderParticipantsMobile(participants);
+      renderMyPosition(data.selectedParticipant);
+      applyParticipantFilter();
       renderDeposits(deposits);
       renderDepositsMobile(deposits);
       fillDepositSelect(participants.filter(p => p.status === "AKTIF"));
     }
 
+    function renderMyPosition(p) {
+      const box = document.getElementById("myPositionCard");
+      if (currentRole !== "peserta" || !p) { box.classList.add("hidden"); box.innerHTML = ""; return; }
+      box.classList.remove("hidden");
+      const bayarClass = p.status_bayar === "LUNAS" ? "lunas" : "belum";
+      box.innerHTML = `
+        <div class="section-head"><h2>Posisi Tabungan Saya</h2><span class="status ${bayarClass}">${escapeHtml(p.status_bayar)}</span></div>
+        <div class="mobile-money">
+          <div class="money-box"><span>Target Saya</span><b>${rupiah(p.target)}</b></div>
+          <div class="money-box"><span>Terkumpul</span><b>${rupiah(p.total)}</b></div>
+          <div class="money-box"><span>Kekurangan</span><b>${rupiah(p.kurang)}</b></div>
+          <div class="money-box"><span>Progress</span><b>${p.persen || 0}%</b></div>
+        </div>
+        <div class="chart-wrap"><div class="chart-bar" style="width:${Math.min(Number(p.persen||0),100)}%"></div></div>
+      `;
+    }
+
     function fillQurbanForm(settings) {
       const s = settings || {};
       if (document.getElementById("hargaSapi1")) {
-        document.getElementById("hargaSapi1").value = s.harga_sapi_1 || 0;
-        document.getElementById("hargaSapi2").value = s.harga_sapi_2 || 0;
-        document.getElementById("hargaSapi3").value = s.harga_sapi_3 || 0;
+        document.getElementById("hargaSapi1").value = Number(s.harga_sapi_1 || 0).toLocaleString("id-ID");
+        document.getElementById("hargaSapi2").value = Number(s.harga_sapi_2 || 0).toLocaleString("id-ID");
+        document.getElementById("hargaSapi3").value = Number(s.harga_sapi_3 || 0).toLocaleString("id-ID");
       }
+      if (document.getElementById("tahunQurban")) document.getElementById("tahunQurban").value = s.tahun_qurban || "";
+      if (document.getElementById("namaPanitia")) document.getElementById("namaPanitia").value = s.nama_panitia || "";
+    }
+
+    function applyParticipantFilter() {
+      const filterEl = document.getElementById("filterPeserta");
+      const filter = filterEl ? filterEl.value : "SEMUA";
+      let rows = currentParticipantsData || [];
+      if (filter === "AKTIF") rows = rows.filter(p => p.status === "AKTIF");
+      else if (filter === "NONAKTIF") rows = rows.filter(p => p.status === "NONAKTIF");
+      else if (filter === "LUNAS") rows = rows.filter(p => p.status_bayar === "LUNAS");
+      else if (filter === "BELUM_LUNAS") rows = rows.filter(p => p.status_bayar !== "LUNAS");
+      renderParticipants(rows);
+      renderParticipantsMobile(rows);
+      const counter = document.getElementById("participantCount");
+      if (counter) counter.textContent = rows.length + " peserta ditampilkan";
     }
 
     async function saveQurbanSettings() {
       const data = adminAuthParams({
-        action: "saveQurbanSettings",
+        action:"saveQurbanSettings",
         harga_sapi_1: cleanNumber(document.getElementById("hargaSapi1").value),
         harga_sapi_2: cleanNumber(document.getElementById("hargaSapi2").value),
         harga_sapi_3: cleanNumber(document.getElementById("hargaSapi3").value)
       });
-
       showLoading(true);
-
       try {
-        const res = await api(data);
-        showLoading(false);
-
+        const res = await api(data); showLoading(false);
         alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : ""));
+        if (res && res.ok) refreshDashboard(true);
+      } catch(err) { showLoading(false); alert(err.message || err); }
+    }
 
-        if (res && res.ok) {
-          refreshDashboard(true);
-        }
-      } catch (err) {
-        showLoading(false);
-        alert(err.message || err);
-      }
+    async function saveIdentitySettings() {
+      const data = adminAuthParams({
+        action:"saveIdentitySettings",
+        tahun_qurban: document.getElementById("tahunQurban").value,
+        nama_panitia: document.getElementById("namaPanitia").value
+      });
+      showLoading(true);
+      try {
+        const res = await api(data); showLoading(false);
+        alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : ""));
+        if (res && res.ok) refreshDashboard(true);
+      } catch(err) { showLoading(false); alert(err.message || err); }
     }
 
     function renderParticipants(participants) {
-      const body = document.getElementById("participantsBody");
-      body.innerHTML = "";
-
-      if (!participants.length) {
-        body.innerHTML = `
-          <tr>
-            <td colspan="${currentRole === "admin" ? 8 : 7}" class="empty">
-              Belum ada data peserta.
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      participants.forEach(function (p, index) {
+      const body = document.getElementById("participantsBody"); body.innerHTML = "";
+      if (!participants.length) { body.innerHTML = `<tr><td colspan="${currentRole === "admin" ? 10 : 9}" class="empty">Belum ada data peserta.</td></tr>`; return; }
+      participants.forEach(function(p,index){
         const statusClass = p.status === "AKTIF" ? "aktif" : "nonaktif";
-
+        const bayarClass = p.status_bayar === "LUNAS" ? "lunas" : "belum";
         const action = currentRole === "admin" ? `
-          <td>
-            <div style="display:flex;gap:7px;flex-wrap:wrap;">
-              <button class="btn btn-light btn-sm" onclick="editParticipantById('${p.id}')">Edit</button>
-              ${
-                p.status === "AKTIF"
-                  ? `<button class="btn btn-danger btn-sm" onclick="changeStatus('${p.id}', 'NONAKTIF')">Nonaktifkan</button>`
-                  : `<button class="btn btn-success btn-sm" onclick="changeStatus('${p.id}', 'AKTIF')">Aktifkan</button>`
-              }
-            </div>
-          </td>
-        ` : "";
-
+          <td><div style="display:flex;gap:7px;flex-wrap:wrap;">
+            <button class="btn btn-light btn-sm" onclick="editParticipantById('${p.id}')">Edit</button>
+            ${p.status === "AKTIF" ? `<button class="btn btn-danger btn-sm" onclick="changeStatus('${p.id}','NONAKTIF')">Nonaktifkan</button>` : `<button class="btn btn-success btn-sm" onclick="changeStatus('${p.id}','AKTIF')">Aktifkan</button>`}
+          </div></td>` : "";
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td>${index + 1}</td>
-          <td>
-            <b>${escapeHtml(p.nama)}</b><br>
-            <span style="color:#6b7280;font-size:11px;">${escapeHtml(p.no_hp || "-")}</span>
-          </td>
+          <td>${index+1}</td>
+          <td><b>${escapeHtml(p.nama)}</b><br><span style="color:#6b7280;font-size:11px;">${escapeHtml(p.no_hp || "-")}</span></td>
           <td><span class="status ${statusClass}">${escapeHtml(p.status)}</span></td>
+          <td><span class="status ${bayarClass}">${escapeHtml(p.status_bayar)}</span></td>
           <td>${rupiah(p.target)}</td>
           <td><b>${rupiah(p.total)}</b></td>
           <td>${rupiah(p.kurang)}</td>
-          <td>
-            <div style="display:flex;align-items:center;gap:8px;">
-              <div class="progress">
-                <div style="width:${Math.min(Number(p.persen || 0), 100)}%"></div>
-              </div>
-              <b>${p.persen || 0}%</b>
-            </div>
-          </td>
+          <td><div style="display:flex;align-items:center;gap:8px;"><div class="progress"><div style="width:${Math.min(Number(p.persen || 0),100)}%"></div></div><b>${p.persen || 0}%</b></div></td>
+          <td><button class="btn btn-light btn-sm" onclick="toggleDetail('${p.id}')">Riwayat</button></td>
           ${action}
         `;
         body.appendChild(tr);
+        const detail = document.createElement("tr");
+        detail.id = "detail-row-" + p.id;
+        detail.className = "hidden";
+        detail.innerHTML = `<td colspan="${currentRole === "admin" ? 10 : 9}">${buildDetailHtml(p)}</td>`;
+        body.appendChild(detail);
       });
     }
 
     function renderParticipantsMobile(participants) {
-      const box = document.getElementById("participantsMobile");
-      box.innerHTML = "";
-
-      if (!participants.length) {
-        box.innerHTML = `<div class="empty">Belum ada data peserta.</div>`;
-        return;
-      }
-
-      participants.forEach(function (p) {
+      const box = document.getElementById("participantsMobile"); box.innerHTML = "";
+      if (!participants.length) { box.innerHTML = `<div class="empty">Belum ada data peserta.</div>`; return; }
+      participants.forEach(function(p){
         const statusClass = p.status === "AKTIF" ? "aktif" : "nonaktif";
-        const div = document.createElement("div");
-        div.className = "mobile-item";
-
+        const bayarClass = p.status_bayar === "LUNAS" ? "lunas" : "belum";
+        const div = document.createElement("div"); div.className = "mobile-item";
         const action = currentRole === "admin" ? `
           <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;">
             <button class="btn btn-light btn-sm" onclick="editParticipantById('${p.id}')">Edit</button>
-            ${
-              p.status === "AKTIF"
-                ? `<button class="btn btn-danger btn-sm" onclick="changeStatus('${p.id}', 'NONAKTIF')">Nonaktifkan</button>`
-                : `<button class="btn btn-success btn-sm" onclick="changeStatus('${p.id}', 'AKTIF')">Aktifkan</button>`
-            }
-          </div>
-        ` : "";
-
+            ${p.status === "AKTIF" ? `<button class="btn btn-danger btn-sm" onclick="changeStatus('${p.id}','NONAKTIF')">Nonaktifkan</button>` : `<button class="btn btn-success btn-sm" onclick="changeStatus('${p.id}','AKTIF')">Aktifkan</button>`}
+          </div>` : "";
         div.innerHTML = `
           <div class="mobile-item-top">
-            <div>
-              <h3>${escapeHtml(p.nama)}</h3>
-              <div class="mobile-meta">${escapeHtml(p.no_hp || "-")}</div>
-            </div>
-            <span class="status ${statusClass}">${escapeHtml(p.status)}</span>
+            <div><h3>${escapeHtml(p.nama)}</h3><div class="mobile-meta">${escapeHtml(p.no_hp || "-")}</div></div>
+            <div style="display:flex;gap:4px;flex-direction:column;align-items:flex-end;"><span class="status ${statusClass}">${escapeHtml(p.status)}</span><span class="status ${bayarClass}">${escapeHtml(p.status_bayar)}</span></div>
           </div>
-
-          <div style="margin-top:10px;display:flex;align-items:center;gap:8px;">
-            <div class="progress" style="width:100%;">
-              <div style="width:${Math.min(Number(p.persen || 0), 100)}%"></div>
-            </div>
-            <b style="font-size:12px;">${p.persen || 0}%</b>
-          </div>
-
+          <div style="margin-top:10px;display:flex;align-items:center;gap:8px;"><div class="progress" style="width:100%;"><div style="width:${Math.min(Number(p.persen || 0),100)}%"></div></div><b style="font-size:12px;">${p.persen || 0}%</b></div>
           <div class="mobile-money">
             <div class="money-box"><span>Target</span><b>${rupiah(p.target)}</b></div>
             <div class="money-box"><span>Terkumpul</span><b>${rupiah(p.total)}</b></div>
             <div class="money-box"><span>Kekurangan</span><b>${rupiah(p.kurang)}</b></div>
             <div class="money-box"><span>Progress</span><b>${p.persen || 0}%</b></div>
           </div>
-
+          <button class="btn btn-light btn-sm" style="margin-top:10px;width:100%;" onclick="toggleMobileDetail(this, '${p.id}')">Lihat Riwayat Setoran</button>
+          <div class="detail-box hidden" id="mobile-detail-${p.id}">${buildDetailHtml(p)}</div>
           ${action}
         `;
-
         box.appendChild(div);
       });
     }
 
+    function buildDetailHtml(p) {
+      const rows = p.riwayat || [];
+      if (!rows.length) return `<div class="empty">Belum ada setoran untuk peserta ini.</div>`;
+      return `<div class="detail-box">${rows.map(r => `<div class="detail-row"><span>${escapeHtml(r.tanggal_text)} • ${escapeHtml(r.keterangan)}</span><b>${escapeHtml(r.jumlah_text)}</b></div>`).join("")}</div>`;
+    }
+
+    function toggleDetail(id) {
+      const el = document.getElementById("detail-row-" + id);
+      if (el) el.classList.toggle("hidden");
+    }
+
+    function toggleMobileDetail(btn, id) {
+      const el = document.getElementById("mobile-detail-" + id);
+      if (el) el.classList.toggle("hidden");
+    }
+
     function renderDeposits(deposits) {
-      const body = document.getElementById("depositsBody");
-      body.innerHTML = "";
-
-      if (!deposits.length) {
-        body.innerHTML = `
-          <tr>
-            <td colspan="${currentRole === "admin" ? 5 : 4}" class="empty">
-              Belum ada riwayat setoran.
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      deposits.forEach(function (d) {
-        const action = currentRole === "admin"
-          ? `<td><button class="btn btn-danger btn-sm" onclick="deleteDeposit('${d.id}')">Hapus</button></td>`
-          : "";
-
+      const body = document.getElementById("depositsBody"); body.innerHTML = "";
+      if (!deposits.length) { body.innerHTML = `<tr><td colspan="${currentRole === "admin" ? 5 : 4}" class="empty">Belum ada riwayat setoran.</td></tr>`; return; }
+      deposits.forEach(function(d){
+        const action = currentRole === "admin" ? `<td><button class="btn btn-danger btn-sm" onclick="deleteDeposit('${d.id}')">Hapus</button></td>` : "";
         const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${escapeHtml(d.tanggal_text)}</td>
-          <td><b>${escapeHtml(d.nama)}</b></td>
-          <td><b>${escapeHtml(d.jumlah_text)}</b></td>
-          <td>${escapeHtml(d.keterangan || "-")}</td>
-          ${action}
-        `;
+        tr.innerHTML = `<td>${escapeHtml(d.tanggal_text)}</td><td><b>${escapeHtml(d.nama)}</b></td><td><b>${escapeHtml(d.jumlah_text)}</b></td><td>${escapeHtml(d.keterangan || "-")}</td>${action}`;
         body.appendChild(tr);
       });
     }
 
     function renderDepositsMobile(deposits) {
-      const box = document.getElementById("depositsMobile");
-      box.innerHTML = "";
-
-      if (!deposits.length) {
-        box.innerHTML = `<div class="empty">Belum ada riwayat setoran.</div>`;
-        return;
-      }
-
-      deposits.forEach(function (d) {
-        const action = currentRole === "admin"
-          ? `<button class="btn btn-danger btn-sm" style="margin-top:10px;" onclick="deleteDeposit('${d.id}')">Hapus</button>`
-          : "";
-
-        const div = document.createElement("div");
-        div.className = "mobile-item";
-        div.innerHTML = `
-          <div class="mobile-item-top">
-            <div>
-              <h3>${escapeHtml(d.nama)}</h3>
-              <div class="mobile-meta">${escapeHtml(d.tanggal_text)} • ${escapeHtml(d.keterangan || "-")}</div>
-            </div>
-            <b style="font-size:13px;">${escapeHtml(d.jumlah_text)}</b>
-          </div>
-          ${action}
-        `;
+      const box = document.getElementById("depositsMobile"); box.innerHTML = "";
+      if (!deposits.length) { box.innerHTML = `<div class="empty">Belum ada riwayat setoran.</div>`; return; }
+      deposits.forEach(function(d){
+        const action = currentRole === "admin" ? `<button class="btn btn-danger btn-sm" style="margin-top:10px;" onclick="deleteDeposit('${d.id}')">Hapus</button>` : "";
+        const div = document.createElement("div"); div.className = "mobile-item";
+        div.innerHTML = `<div class="mobile-item-top"><div><h3>${escapeHtml(d.nama)}</h3><div class="mobile-meta">${escapeHtml(d.tanggal_text)} • ${escapeHtml(d.keterangan || "-")}</div></div><b style="font-size:13px;">${escapeHtml(d.jumlah_text)}</b></div>${action}`;
         box.appendChild(div);
       });
     }
 
     function fillDepositSelect(participants) {
-      const select = document.getElementById("depositParticipant");
-      if (!select) return;
-
+      const select = document.getElementById("depositParticipant"); if (!select) return;
       select.innerHTML = "";
-
-      participants.forEach(function (p) {
-        const option = document.createElement("option");
-        option.value = p.id;
-        option.textContent = p.nama;
-        select.appendChild(option);
-      });
+      participants.forEach(function(p){ const option = document.createElement("option"); option.value = p.id; option.textContent = p.nama; select.appendChild(option); });
     }
 
-    function resetParticipantForm() {
-      document.getElementById("participantId").value = "";
-      document.getElementById("formName").value = "";
-      document.getElementById("formPhone").value = "";
-    }
-
+    function resetParticipantForm() { document.getElementById("participantId").value = ""; document.getElementById("formName").value = ""; document.getElementById("formPhone").value = ""; }
     function editParticipantById(id) {
-      const p = currentParticipantsData.find(x => x.id === id);
-      if (!p) return;
-
+      const p = currentParticipantsData.find(x => x.id === id); if (!p) return;
       document.getElementById("participantId").value = p.id || "";
       document.getElementById("formName").value = p.nama || "";
       document.getElementById("formPhone").value = p.no_hp || "";
-
-      const adminPanel = document.getElementById("adminPanel");
-      if (adminPanel) {
-        window.scrollTo({
-          top: adminPanel.offsetTop - 10,
-          behavior: "smooth"
-        });
-      }
+      const adminPanel = document.getElementById("adminPanel"); if (adminPanel) window.scrollTo({ top: adminPanel.offsetTop - 10, behavior:"smooth" });
     }
 
     async function saveParticipant() {
-      const data = adminAuthParams({
-        action: "saveParticipant",
-        id: document.getElementById("participantId").value,
-        nama: document.getElementById("formName").value,
-        no_hp: document.getElementById("formPhone").value
-      });
-
+      const data = adminAuthParams({ action:"saveParticipant", id:document.getElementById("participantId").value, nama:document.getElementById("formName").value, no_hp:document.getElementById("formPhone").value });
       showLoading(true);
-
-      try {
-        const res = await api(data);
-        showLoading(false);
-
-        alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : ""));
-
-        if (res && res.ok) {
-          resetParticipantForm();
-          await loadInitialData();
-          await refreshDashboard(true);
-        }
-      } catch (err) {
-        showLoading(false);
-        alert(err.message || err);
-      }
+      try { const res = await api(data); showLoading(false); alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : "")); if (res && res.ok) { resetParticipantForm(); await loadInitialData(); await refreshDashboard(true); } } catch(err) { showLoading(false); alert(err.message || err); }
     }
 
-    async function changeStatus(id, status) {
-      const text = status === "NONAKTIF"
-        ? "Nonaktifkan peserta ini?"
-        : "Aktifkan kembali peserta ini?";
-
-      if (!confirm(text)) return;
-
+    async function changeStatus(id,status) {
+      if (!confirm(status === "NONAKTIF" ? "Nonaktifkan peserta ini?" : "Aktifkan kembali peserta ini?")) return;
       showLoading(true);
-
-      try {
-        const res = await api(adminAuthParams({
-          action: "setParticipantStatus",
-          id: id,
-          status: status
-        }));
-
-        showLoading(false);
-
-        alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : ""));
-
-        if (res && res.ok) {
-          await loadInitialData();
-          await refreshDashboard(true);
-        }
-      } catch (err) {
-        showLoading(false);
-        alert(err.message || err);
-      }
+      try { const res = await api(adminAuthParams({ action:"setParticipantStatus", id:id, status:status })); showLoading(false); alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : "")); if (res && res.ok) { await loadInitialData(); await refreshDashboard(true); } } catch(err) { showLoading(false); alert(err.message || err); }
     }
 
     async function addDeposit() {
-      const data = adminAuthParams({
-        action: "addDeposit",
-        participant_id: document.getElementById("depositParticipant").value,
-        tanggal: document.getElementById("depositDate").value,
-        jumlah: cleanNumber(document.getElementById("depositAmount").value),
-        keterangan: document.getElementById("depositNote").value
-      });
-
+      const data = adminAuthParams({ action:"addDeposit", participant_id:document.getElementById("depositParticipant").value, tanggal:document.getElementById("depositDate").value, jumlah:cleanNumber(document.getElementById("depositAmount").value), keterangan:document.getElementById("depositNote").value });
       showLoading(true);
-
-      try {
-        const res = await api(data);
-        showLoading(false);
-
-        alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : ""));
-
-        if (res && res.ok) {
-          document.getElementById("depositAmount").value = "";
-          document.getElementById("depositNote").value = "";
-          document.getElementById("depositDate").valueAsDate = new Date();
-          await refreshDashboard(true);
-        }
-      } catch (err) {
-        showLoading(false);
-        alert(err.message || err);
-      }
+      try { const res = await api(data); showLoading(false); alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : "")); if (res && res.ok) { document.getElementById("depositAmount").value = ""; document.getElementById("depositNote").value = ""; document.getElementById("depositDate").valueAsDate = new Date(); await refreshDashboard(true); } } catch(err) { showLoading(false); alert(err.message || err); }
     }
 
     async function deleteDeposit(id) {
       if (!confirm("Hapus data setoran ini?")) return;
-
       showLoading(true);
-
-      try {
-        const res = await api(adminAuthParams({
-          action: "deleteDeposit",
-          id: id
-        }));
-
-        showLoading(false);
-
-        alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : ""));
-
-        if (res && res.ok) {
-          await refreshDashboard(true);
-        }
-      } catch (err) {
-        showLoading(false);
-        alert(err.message || err);
-      }
+      try { const res = await api(adminAuthParams({ action:"deleteDeposit", id:id })); showLoading(false); alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : "")); if (res && res.ok) await refreshDashboard(true); } catch(err) { showLoading(false); alert(err.message || err); }
     }
 
     async function exportPdf() {
       showLoading(true);
+      try { const res = await api({ action:"exportPdf", role:currentRole, participant_id:currentParticipantId }); showLoading(false); if (!res || !res.ok) { alert(((res && res.message) || "Export PDF gagal.") + "\n\n" + ((res && res.detail) || "")); return; } window.open(res.url, "_blank"); } catch(err) { showLoading(false); alert(err.message || err); }
+    }
 
-      try {
-        const res = await api(adminAuthParams({
-          action: "exportPdf"
-        }));
-
-        showLoading(false);
-
-        if (!res || !res.ok) {
-          alert(((res && res.message) || "Export PDF gagal.") + "\n\n" + ((res && res.detail) || ""));
-          return;
-        }
-
-        window.open(res.url, "_blank");
-      } catch (err) {
-        showLoading(false);
-        alert(err.message || err);
-      }
+    async function exportExcel() {
+      showLoading(true);
+      try { const res = await api({ action:"exportExcel", role:currentRole, participant_id:currentParticipantId }); showLoading(false); if (!res || !res.ok) { alert(((res && res.message) || "Export Excel gagal.") + "\n\n" + ((res && res.detail) || "")); return; } window.open(res.url, "_blank"); } catch(err) { showLoading(false); alert(err.message || err); }
     }
 
     async function openSpreadsheet() {
       showLoading(true);
-
-      try {
-        const res = await api(adminAuthParams({
-          action: "spreadsheetUrl"
-        }));
-
-        showLoading(false);
-
-        if (!res || !res.ok) {
-          alert((res && res.message) || "Gagal membuka database.");
-          return;
-        }
-
-        window.open(res.url, "_blank");
-      } catch (err) {
-        showLoading(false);
-        alert(err.message || err);
-      }
+      try { const res = await api(adminAuthParams({ action:"spreadsheetUrl" })); showLoading(false); if (!res || !res.ok) { alert((res && res.message) || "Gagal membuka database."); return; } window.open(res.url, "_blank"); } catch(err) { showLoading(false); alert(err.message || err); }
     }
 
-    function openPasswordModal() {
-      document.getElementById("newAdminPassword").value = "";
-      document.getElementById("passwordModal").classList.remove("hidden");
-    }
-
-    function closePasswordModal() {
-      document.getElementById("passwordModal").classList.add("hidden");
-    }
+    function openPasswordModal(){ document.getElementById("newAdminPassword").value = ""; document.getElementById("passwordModal").classList.remove("hidden"); }
+    function closePasswordModal(){ document.getElementById("passwordModal").classList.add("hidden"); }
 
     async function changeAdminPassword() {
       const newPassword = document.getElementById("newAdminPassword").value.trim();
-
-      if (newPassword.length < 6) {
-        alert("Password baru minimal 6 karakter.");
-        return;
-      }
-
+      if (newPassword.length < 6) { alert("Password baru minimal 6 karakter."); return; }
       showLoading(true);
-
-      try {
-        const res = await api(adminAuthParams({
-          action: "changeAdminPassword",
-          new_password: newPassword
-        }));
-
-        showLoading(false);
-        alert((res && res.message) || "Selesai.");
-
-        if (res && res.ok) {
-          closePasswordModal();
-          logout();
-        }
-      } catch (err) {
-        showLoading(false);
-        alert(err.message || err);
-      }
+      try { const res = await api(adminAuthParams({ action:"changeAdminPassword", new_password:newPassword })); showLoading(false); alert((res && res.message) || "Selesai."); if (res && res.ok) { closePasswordModal(); logout(); } } catch(err) { showLoading(false); alert(err.message || err); }
     }
   </script>
 </body>
