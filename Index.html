@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tabungan Qurban Keluarga Besar H.M. Amin</title>
+
+  <style>
+    :root {
+      --primary: #0f766e;
+      --dark: #0f172a;
+      --muted: #64748b;
+      --bg: #f3f6fb;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --gold: #f59e0b;
+      --shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--dark);
+      background:
+        radial-gradient(circle at top left, rgba(15,118,110,.16), transparent 35%),
+        radial-gradient(circle at top right, rgba(245,158,11,.16), transparent 30%),
+        var(--bg);
+    }
+
+    input, select, textarea, button {
+      font-family: inherit;
+      font-size: 15px;
+    }
+
+    .hidden { display: none !important; }
+
+    .login-wrap {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 14px;
+    }
+
+    .login-card {
+      width: min(980px, 100%);
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+    }
+
+    .hero {
+      color: white;
+      padding: 38px;
+      background: linear-gradient(135deg, #0f766e, #115e59);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.1);
+      right: -70px;
+      bottom: -90px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.25);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .hero h1 {
+      margin: 24px 0 12px;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1;
+      letter-spacing: -1.5px;
+    }
+
+    .hero p {
+      margin: 0;
+      line-height: 1.7;
+      color: rgba(255,255,255,.88);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-grid {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-box {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+
+    .hero-box b {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+
+    .hero-box span {
+      font-size: 13px;
+      color: rgba(255,255,255,.82);
+    }
+
+    .login-panel { padding: 30px; }
+
+    h2 { margin: 0 0 10px; }
+
+    .desc {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      padding: 5px;
+      background: #eef2f7;
+      border-radius: 15px;
+      margin-bottom: 18px;
+    }
+
+    .tab {
+      border: 0;
+      background: transparent;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 900;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 8px 20px rgba(15,23,42,.08);
+    }
+
+    .field { margin-bottom: 13px; }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .field input, .field select, .field textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      outline: none;
+      background: white;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(15,118,110,.1);
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 15px;
+      padding: 12px 15px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0f766e, #115e59);
+      color: white;
+      box-shadow: 0 12px 26px rgba(15,118,110,.22);
+    }
+
+    .btn-light { background: #eef2f7; color: var(--dark); }
+    .btn-danger { background: #fee2e2; color: #991b1b; }
+    .btn-success { background: #dcfce7; color: #166534; }
+    .btn-warning { background: #fef3c7; color: #92400e; }
+    .btn-sm { padding: 8px 10px; font-size: 12px; border-radius: 11px; }
+    .full { width: 100%; }
+
+    .alert {
+      padding: 12px 14px;
+      border-radius: 14px;
+      margin-bottom: 14px;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .alert-error {
+      background: #fee2e2;
+      color: #7f1d1d;
+      border: 1px solid #fecaca;
+    }
+
+    .alert-success {
+      background: #dcfce7;
+      color: #14532d;
+      border: 1px solid #bbf7d0;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 18px 0 36px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 17px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #0f766e, #f59e0b);
+      color: white;
+      font-size: 25px;
+      font-weight: 950;
+      flex: 0 0 auto;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(18px, 3vw, 27px);
+      letter-spacing: -.8px;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.9);
+    }
+
+    .stat .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .stat .value {
+      font-size: clamp(21px, 3vw, 29px);
+      font-weight: 950;
+      letter-spacing: -1px;
+    }
+
+    .stat .small {
+      color: var(--muted);
+      margin-top: 6px;
+      font-size: 12px;
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 13px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .table-card { margin-bottom: 14px; }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: white;
+    }
+
+    table {
+      width: 100%;
+      min-width: 850px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px 13px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f8fafc;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: .04em;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .status {
+      display: inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .status.aktif { background: #dcfce7; color: #166534; }
+    .status.nonaktif { background: #fee2e2; color: #991b1b; }
+
+    .progress {
+      width: 150px;
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #e2e8f0;
+    }
+
+    .progress div {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #0f766e, #f59e0b);
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 26px;
+    }
+
+    .loading {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(15,23,42,.45);
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .loading-box {
+      width: min(360px, 100%);
+      padding: 22px;
+      border-radius: 22px;
+      background: white;
+      box-shadow: 0 25px 70px rgba(0,0,0,.22);
+    }
+
+    .loading-box h3 { margin: 0 0 8px; }
+    .loading-box p { margin: 0; color: var(--muted); line-height: 1.5; }
+
+    .foot {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 18px;
+      line-height: 1.5;
+    }
+
+    .mobile-note {
+      display: none;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 880px) {
+      .login-card { grid-template-columns: 1fr; }
+      .hero { padding: 28px; }
+      .summary { grid-template-columns: repeat(2, 1fr); }
+      .admin-grid { grid-template-columns: 1fr; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .actions { width: 100%; }
+      .actions .btn { flex: 1; }
+      .mobile-note { display: block; }
+    }
+
+    @media (max-width: 560px) {
+      .page { width: calc(100% - 18px); padding-top: 10px; }
+      .login-wrap { padding: 9px; }
+      .login-card { border-radius: 22px; }
+      .hero { padding: 23px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .login-panel { padding: 22px; }
+      .summary { grid-template-columns: 1fr; }
+      .card { padding: 15px; }
+      .brand { align-items: flex-start; }
+      .logo { width: 46px; height: 46px; }
+      .actions .btn { width: 100%; }
+      th, td { padding: 11px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="loginView" class="login-wrap">
+    <div class="login-card">
+      <div class="hero">
+        <div class="badge">🕌 Sistem Tabungan Qurban</div>
+        <h1>Keluarga Besar H.M. Amin</h1>
+        <p>
+          Sistem pencatatan tabungan qurban keluarga yang transparan, rapi,
+          mudah dibuka dari HP, dan bisa export laporan PDF.
+        </p>
+
+        <div class="hero-grid">
+          <div class="hero-box">
+            <b>Rp3 Juta</b>
+            <span>Target per orang</span>
+          </div>
+          <div class="hero-box">
+            <b>PDF</b>
+            <span>Laporan otomatis</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="login-panel">
+        <h2>Masuk Aplikasi</h2>
+        <div class="desc">
+          Peserta masuk cukup dengan nama. Admin masuk dengan username dan password.
+        </div>
+
+        <div id="initAlert"></div>
+
+        <div class="tabs">
+          <button id="tabPeserta" class="tab active" onclick="switchTab('peserta')">Peserta</button>
+          <button id="tabAdmin" class="tab" onclick="switchTab('admin')">Admin</button>
+        </div>
+
+        <div id="loginAlert"></div>
+
+        <div id="pesertaBox">
+          <div class="field">
+            <label>Nama Peserta</label>
+            <input id="participantName" list="participantList" placeholder="Ketik atau pilih nama" />
+            <datalist id="participantList"></datalist>
+          </div>
+          <button class="btn btn-primary full" onclick="loginPeserta()">Masuk sebagai Peserta</button>
+        </div>
+
+        <div id="adminBox" class="hidden">
+          <div class="field">
+            <label>Username Admin</label>
+            <input id="adminUsername" placeholder="Username" />
+          </div>
+          <div class="field">
+            <label>Password Admin</label>
+            <input id="adminPassword" type="password" placeholder="Password" />
+          </div>
+          <button class="btn btn-primary full" onclick="loginAdmin()">Masuk sebagai Admin</button>
+        </div>
+
+        <div class="foot">
+          Default admin: <b>admin</b> / <b>qurban123</b><br />
+          Ubah username dan password admin di file Code.gs.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="appView" class="hidden">
+    <div class="page">
+      <div class="topbar">
+        <div class="brand">
+          <div class="logo">Q</div>
+          <div>
+            <h1>Tabungan Qurban H.M. Amin</h1>
+            <p id="userInfo">Masuk sebagai peserta</p>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-light" onclick="refreshDashboard()">Refresh</button>
+          <button id="exportBtn" class="btn btn-warning hidden" onclick="exportPdf()">Export PDF</button>
+          <button id="sheetBtn" class="btn btn-light hidden" onclick="openSpreadsheet()">Database</button>
+          <button class="btn btn-danger" onclick="logout()">Keluar</button>
+        </div>
+      </div>
+
+      <div class="summary">
+        <div class="card stat">
+          <div class="label">Peserta Aktif</div>
+          <div class="value" id="sumPeserta">0</div>
+          <div class="small">Jumlah anggota aktif</div>
+        </div>
+
+        <div class="card stat">
+          <div class="label">Total Target</div>
+          <div class="value" id="sumTarget">Rp0</div>
+          <div class="small">Target seluruh peserta</div>
+        </div>
+
+        <div class="card stat">
+          <div class="label">Total Terkumpul</div>
+          <div class="value" id="sumTerkumpul">Rp0</div>
+          <div class="small">Dana yang sudah disetor</div>
+        </div>
+
+        <div class="card stat">
+          <div class="label">Total Kekurangan</div>
+          <div class="value" id="sumKurang">Rp0</div>
+          <div class="small" id="sumPersen">Progress 0%</div>
+        </div>
+      </div>
+
+      <div id="adminPanel" class="admin-grid hidden">
+        <div class="card">
+          <div class="section-head">
+            <h2>Tambah / Edit Peserta</h2>
+          </div>
+
+          <input type="hidden" id="participantId" />
+
+          <div class="field">
+            <label>Nama Peserta</label>
+            <input id="formName" placeholder="Contoh: Ahmad Amin" />
+          </div>
+
+          <div class="field">
+            <label>No. HP</label>
+            <input id="formPhone" placeholder="Opsional" />
+          </div>
+
+          <div class="field">
+            <label>Target Tabungan</label>
+            <input id="formTarget" inputmode="numeric" value="3000000" />
+          </div>
+
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="saveParticipant()">Simpan Peserta</button>
+            <button class="btn btn-light" onclick="resetParticipantForm()">Reset</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-head">
+            <h2>Input Setoran</h2>
+          </div>
+
+          <div class="field">
+            <label>Peserta</label>
+            <select id="depositParticipant"></select>
+          </div>
+
+          <div class="field">
+            <label>Tanggal Setoran</label>
+            <input id="depositDate" type="date" />
+          </div>
+
+          <div class="field">
+            <label>Jumlah Setoran</label>
+            <input id="depositAmount" inputmode="numeric" placeholder="Contoh: 100000" />
+          </div>
+
+          <div class="field">
+            <label>Keterangan</label>
+            <textarea id="depositNote" rows="2" placeholder="Contoh: Setoran minggu pertama"></textarea>
+          </div>
+
+          <button class="btn btn-primary" onclick="addDeposit()">Simpan Setoran</button>
+        </div>
+      </div>
+
+      <div class="card table-card">
+        <div class="section-head">
+          <div>
+            <h2>Rincian Tabungan Peserta</h2>
+            <div class="mobile-note">Geser tabel ke kanan/kiri jika layar HP kecil.</div>
+          </div>
+          <span id="participantCount" style="color:var(--muted);font-size:13px;"></span>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Status</th>
+                <th>Target</th>
+                <th>Terkumpul</th>
+                <th>Kekurangan</th>
+                <th>Progress</th>
+                <th class="admin-only hidden">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="participantsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card table-card">
+        <div class="section-head">
+          <div>
+            <h2>Riwayat Setoran</h2>
+            <div class="mobile-note">Data terbaru tampil di bagian atas.</div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tanggal</th>
+                <th>Nama</th>
+                <th>Jumlah</th>
+                <th>Keterangan</th>
+                <th class="admin-only hidden">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="depositsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="foot">
+        Semoga menjadi wasilah kebaikan, kebersamaan keluarga, dan qurban yang diterima Allah.
+      </div>
+    </div>
+  </div>
+
+  <div id="loading" class="loading hidden">
+    <div class="loading-box">
+      <h3>Memproses...</h3>
+      <p>Mohon tunggu sebentar.</p>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbyIveDg__yr7URPoC-K1svKjOVSgx835wNusBoD18-9PoRkQ089F2jLwsw1DxW5n5deBA/exec";
+
+    let currentRole = "";
+    let currentName = "";
+    let adminUsername = "";
+    let adminPassword = "";
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const dateInput = document.getElementById("depositDate");
+      if (dateInput) {
+        dateInput.valueAsDate = new Date();
+      }
+
+      loadInitialData();
+    });
+
+    function api(params) {
+      return new Promise(function (resolve, reject) {
+        const callbackName =
+          "jsonp_callback_" + Date.now() + "_" + Math.floor(Math.random() * 100000);
+
+        params = params || {};
+        params.callback = callbackName;
+        params._ = Date.now();
+
+        const query = Object.keys(params)
+          .map(function (key) {
+            return encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
+          })
+          .join("&");
+
+        const script = document.createElement("script");
+        script.src = API_URL + "?" + query;
+
+        window[callbackName] = function (data) {
+          cleanup();
+          resolve(data);
+        };
+
+        script.onerror = function () {
+          cleanup();
+          reject(new Error("Gagal menghubungi API. Periksa link Apps Script dan setting deployment."));
+        };
+
+        function cleanup() {
+          delete window[callbackName];
+          if (script.parentNode) {
+            script.parentNode.removeChild(script);
+          }
+        }
+
+        document.body.appendChild(script);
+      });
+    }
+
+    function adminAuthParams(extra) {
+      extra = extra || {};
+      extra.username = adminUsername;
+      extra.password = adminPassword;
+      return extra;
+    }
+
+    function showLoading(show) {
+      document.getElementById("loading").classList.toggle("hidden", !show);
+    }
+
+    function escapeHtml(text) {
+      return String(text || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function rupiah(value) {
+      return "Rp" + Number(value || 0).toLocaleString("id-ID");
+    }
+
+    function cleanNumber(value) {
+      return String(value || "").replace(/[^\d]/g, "");
+    }
+
+    function showAlert(id, message, type) {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      el.innerHTML = `
+        <div class="alert ${type === "success" ? "alert-success" : "alert-error"}">
+          ${message}
+        </div>
+      `;
+    }
+
+    function clearAlert(id) {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = "";
+    }
+
+    async function loadInitialData() {
+      showLoading(true);
+
+      try {
+        const res = await api({ action: "init" });
+
+        showLoading(false);
+
+        if (!res || !res.ok) {
+          const detail = res && res.detail
+            ? "<br><br><b>Detail:</b><br>" + escapeHtml(res.detail)
+            : "";
+
+          showAlert(
+            "initAlert",
+            escapeHtml((res && res.message) || "Aplikasi belum siap.") + detail,
+            "error"
+          );
+          return;
+        }
+
+        fillParticipantDatalist(res.participants || []);
+        clearAlert("initAlert");
+      } catch (err) {
+        showLoading(false);
+        showAlert("initAlert", escapeHtml(err.message || err), "error");
+      }
+    }
+
+    function fillParticipantDatalist(participants) {
+      const list = document.getElementById("participantList");
+      list.innerHTML = "";
+
+      participants.forEach(function (p) {
+        const option = document.createElement("option");
+        option.value = p.nama;
+        list.appendChild(option);
+      });
+    }
+
+    function switchTab(type) {
+      clearAlert("loginAlert");
+
+      document.getElementById("tabPeserta").classList.toggle("active", type === "peserta");
+      document.getElementById("tabAdmin").classList.toggle("active", type === "admin");
+
+      document.getElementById("pesertaBox").classList.toggle("hidden", type !== "peserta");
+      document.getElementById("adminBox").classList.toggle("hidden", type !== "admin");
+    }
+
+    async function loginPeserta() {
+      clearAlert("loginAlert");
+
+      const name = document.getElementById("participantName").value;
+
+      showLoading(true);
+
+      try {
+        const res = await api({
+          action: "loginParticipant",
+          name: name
+        });
+
+        showLoading(false);
+
+        if (!res || !res.ok) {
+          showAlert("loginAlert", escapeHtml((res && res.message) || "Login gagal."), "error");
+          return;
+        }
+
+        currentRole = "peserta";
+        currentName = res.name || name;
+
+        enterApp();
+      } catch (err) {
+        showLoading(false);
+        showAlert("loginAlert", escapeHtml(err.message || err), "error");
+      }
+    }
+
+    async function loginAdmin() {
+      clearAlert("loginAlert");
+
+      const username = document.getElementById("adminUsername").value;
+      const password = document.getElementById("adminPassword").value;
+
+      showLoading(true);
+
+      try {
+        const res = await api({
+          action: "loginAdmin",
+          username: username,
+          password: password
+        });
+
+        showLoading(false);
+
+        if (!res || !res.ok) {
+          showAlert("loginAlert", escapeHtml((res && res.message) || "Login gagal."), "error");
+          return;
+        }
+
+        currentRole = "admin";
+        currentName = "Admin";
+        adminUsername = username;
+        adminPassword = password;
+
+        enterApp();
+      } catch (err) {
+        showLoading(false);
+        showAlert("loginAlert", escapeHtml(err.message || err), "error");
+      }
+    }
+
+    function enterApp() {
+      document.getElementById("loginView").classList.add("hidden");
+      document.getElementById("appView").classList.remove("hidden");
+
+      document.getElementById("userInfo").textContent =
+        currentRole === "admin"
+          ? "Masuk sebagai Admin"
+          : "Masuk sebagai Peserta: " + currentName;
+
+      document.getElementById("adminPanel").classList.toggle("hidden", currentRole !== "admin");
+      document.getElementById("exportBtn").classList.toggle("hidden", currentRole !== "admin");
+      document.getElementById("sheetBtn").classList.toggle("hidden", currentRole !== "admin");
+
+      document.querySelectorAll(".admin-only").forEach(function (el) {
+        el.classList.toggle("hidden", currentRole !== "admin");
+      });
+
+      refreshDashboard();
+    }
+
+    function logout() {
+      currentRole = "";
+      currentName = "";
+      adminUsername = "";
+      adminPassword = "";
+
+      document.getElementById("appView").classList.add("hidden");
+      document.getElementById("loginView").classList.remove("hidden");
+
+      document.getElementById("adminPassword").value = "";
+      clearAlert("loginAlert");
+
+      loadInitialData();
+    }
+
+    async function refreshDashboard() {
+      showLoading(true);
+
+      try {
+        const res = await api({
+          action: "dashboard",
+          role: currentRole
+        });
+
+        showLoading(false);
+
+        if (!res || !res.ok) {
+          alert(((res && res.message) || "Dashboard gagal dimuat.") + "\n\n" + ((res && res.detail) || ""));
+          return;
+        }
+
+        renderDashboard(res);
+      } catch (err) {
+        showLoading(false);
+        alert(err.message || err);
+      }
+    }
+
+    function renderDashboard(data) {
+      const s = data.summary || {};
+
+      document.getElementById("sumPeserta").textContent = s.jumlahPesertaAktif || 0;
+      document.getElementById("sumTarget").textContent = rupiah(s.totalTarget || 0);
+      document.getElementById("sumTerkumpul").textContent = rupiah(s.totalTerkumpul || 0);
+      document.getElementById("sumKurang").textContent = rupiah(s.totalKurang || 0);
+      document.getElementById("sumPersen").textContent = "Progress " + (s.persenTotal || 0) + "%";
+
+      const participants = data.participants || [];
+      const deposits = data.deposits || [];
+
+      document.getElementById("participantCount").textContent = participants.length + " peserta";
+
+      renderParticipants(participants);
+      renderDeposits(deposits);
+      fillDepositSelect(participants.filter(p => p.status === "AKTIF"));
+    }
+
+    function renderParticipants(participants) {
+      const body = document.getElementById("participantsBody");
+      body.innerHTML = "";
+
+      if (!participants.length) {
+        body.innerHTML = `
+          <tr>
+            <td colspan="${currentRole === "admin" ? 8 : 7}" class="empty">
+              Belum ada data peserta.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      participants.forEach(function (p, index) {
+        const tr = document.createElement("tr");
+        const statusClass = p.status === "AKTIF" ? "aktif" : "nonaktif";
+
+        const action = currentRole === "admin" ? `
+          <td>
+            <div style="display:flex;gap:7px;flex-wrap:wrap;">
+              <button class="btn btn-light btn-sm" onclick='editParticipant(${JSON.stringify(p)})'>Edit</button>
+              ${
+                p.status === "AKTIF"
+                  ? `<button class="btn btn-danger btn-sm" onclick="changeStatus('${p.id}', 'NONAKTIF')">Nonaktifkan</button>`
+                  : `<button class="btn btn-success btn-sm" onclick="changeStatus('${p.id}', 'AKTIF')">Aktifkan</button>`
+              }
+            </div>
+          </td>
+        ` : "";
+
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>
+            <b>${escapeHtml(p.nama)}</b><br>
+            <span style="color:var(--muted);font-size:12px;">${escapeHtml(p.no_hp || "-")}</span>
+          </td>
+          <td><span class="status ${statusClass}">${escapeHtml(p.status)}</span></td>
+          <td>${rupiah(p.target)}</td>
+          <td><b>${rupiah(p.total)}</b></td>
+          <td>${rupiah(p.kurang)}</td>
+          <td>
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div class="progress">
+                <div style="width:${Math.min(Number(p.persen || 0), 100)}%"></div>
+              </div>
+              <b>${p.persen || 0}%</b>
+            </div>
+          </td>
+          ${action}
+        `;
+
+        body.appendChild(tr);
+      });
+    }
+
+    function renderDeposits(deposits) {
+      const body = document.getElementById("depositsBody");
+      body.innerHTML = "";
+
+      if (!deposits.length) {
+        body.innerHTML = `
+          <tr>
+            <td colspan="${currentRole === "admin" ? 5 : 4}" class="empty">
+              Belum ada riwayat setoran.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      deposits.forEach(function (d) {
+        const action = currentRole === "admin" ? `
+          <td>
+            <button class="btn btn-danger btn-sm" onclick="deleteDeposit('${d.id}')">Hapus</button>
+          </td>
+        ` : "";
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td>${escapeHtml(d.tanggal_text)}</td>
+          <td><b>${escapeHtml(d.nama)}</b></td>
+          <td><b>${escapeHtml(d.jumlah_text)}</b></td>
+          <td>${escapeHtml(d.keterangan || "-")}</td>
+          ${action}
+        `;
+
+        body.appendChild(tr);
+      });
+    }
+
+    function fillDepositSelect(participants) {
+      const select = document.getElementById("depositParticipant");
+      if (!select) return;
+
+      select.innerHTML = "";
+
+      participants.forEach(function (p) {
+        const option = document.createElement("option");
+        option.value = p.id;
+        option.textContent = p.nama;
+        select.appendChild(option);
+      });
+    }
+
+    function resetParticipantForm() {
+      document.getElementById("participantId").value = "";
+      document.getElementById("formName").value = "";
+      document.getElementById("formPhone").value = "";
+      document.getElementById("formTarget").value = "3000000";
+    }
+
+    function editParticipant(p) {
+      document.getElementById("participantId").value = p.id || "";
+      document.getElementById("formName").value = p.nama || "";
+      document.getElementById("formPhone").value = p.no_hp || "";
+      document.getElementById("formTarget").value = p.target || 3000000;
+
+      window.scrollTo({
+        top: document.getElementById("adminPanel").offsetTop - 12,
+        behavior: "smooth"
+      });
+    }
+
+    async function saveParticipant() {
+      const data = adminAuthParams({
+        action: "saveParticipant",
+        id: document.getElementById("participantId").value,
+        nama: document.getElementById("formName").value,
+        no_hp: document.getElementById("formPhone").value,
+        target: cleanNumber(document.getElementById("formTarget").value)
+      });
+
+      showLoading(true);
+
+      try {
+        const res = await api(data);
+
+        showLoading(false);
+        alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : ""));
+
+        if (res && res.ok) {
+          resetParticipantForm();
+          refreshDashboard();
+          loadInitialData();
+        }
+      } catch (err) {
+        showLoading(false);
+        alert(err.message || err);
+      }
+    }
+
+    async function changeStatus(id, status) {
+      const text = status === "NONAKTIF"
+        ? "Nonaktifkan peserta ini?"
+        : "Aktifkan kembali peserta ini?";
+
+      if (!confirm(text)) return;
+
+      showLoading(true);
+
+      try {
+        const res = await api(adminAuthParams({
+          action: "setParticipantStatus",
+          id: id,
+          status: status
+        }));
+
+        showLoading(false);
+        alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : ""));
+
+        if (res && res.ok) {
+          refreshDashboard();
+          loadInitialData();
+        }
+      } catch (err) {
+        showLoading(false);
+        alert(err.message || err);
+      }
+    }
+
+    async function addDeposit() {
+      const data = adminAuthParams({
+        action: "addDeposit",
+        participant_id: document.getElementById("depositParticipant").value,
+        tanggal: document.getElementById("depositDate").value,
+        jumlah: cleanNumber(document.getElementById("depositAmount").value),
+        keterangan: document.getElementById("depositNote").value
+      });
+
+      showLoading(true);
+
+      try {
+        const res = await api(data);
+
+        showLoading(false);
+        alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : ""));
+
+        if (res && res.ok) {
+          document.getElementById("depositAmount").value = "";
+          document.getElementById("depositNote").value = "";
+          document.getElementById("depositDate").valueAsDate = new Date();
+          refreshDashboard();
+        }
+      } catch (err) {
+        showLoading(false);
+        alert(err.message || err);
+      }
+    }
+
+    async function deleteDeposit(id) {
+      if (!confirm("Hapus data setoran ini?")) return;
+
+      showLoading(true);
+
+      try {
+        const res = await api(adminAuthParams({
+          action: "deleteDeposit",
+          id: id
+        }));
+
+        showLoading(false);
+        alert(((res && res.message) || "Selesai.") + ((res && res.detail) ? "\n\n" + res.detail : ""));
+
+        if (res && res.ok) {
+          refreshDashboard();
+        }
+      } catch (err) {
+        showLoading(false);
+        alert(err.message || err);
+      }
+    }
+
+    async function exportPdf() {
+      showLoading(true);
+
+      try {
+        const res = await api(adminAuthParams({
+          action: "exportPdf"
+        }));
+
+        showLoading(false);
+
+        if (!res || !res.ok) {
+          alert(((res && res.message) || "Export PDF gagal.") + "\n\n" + ((res && res.detail) || ""));
+          return;
+        }
+
+        window.open(res.url, "_blank");
+      } catch (err) {
+        showLoading(false);
+        alert(err.message || err);
+      }
+    }
+
+    async function openSpreadsheet() {
+      showLoading(true);
+
+      try {
+        const res = await api(adminAuthParams({
+          action: "spreadsheetUrl"
+        }));
+
+        showLoading(false);
+
+        if (!res || !res.ok) {
+          alert((res && res.message) || "Gagal membuka database.");
+          return;
+        }
+
+        window.open(res.url, "_blank");
+      } catch (err) {
+        showLoading(false);
+        alert(err.message || err);
+      }
+    }
+  </script>
+</body>
+</html>
